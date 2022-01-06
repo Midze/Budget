@@ -1,0 +1,50 @@
+.card {
+    background: #141619;
+    border: 1px solid #202226;
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding: 16px;
+}
+
+.title {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    color: #C7D0D9;
+    grid-area: title;
+}
+
+.add {
+    grid-area: add;
+    display: grid;
+    grid-template-areas: 
+    "title datePicker"
+    "form form";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 24px 1fr;
+    grid-row-gap: 60px;
+    
+}
+
+.total {
+    grid-area: total;
+}
+
+.chart {
+    grid-area: chart;
+}
+
+.categories {
+    grid-area: categories;
+}
+
+.expenses {
+    display: grid;
+    grid-template-areas: 
+    "title"
+    "total"
+    "list";
+    grid-template-rows: 32px 15vw auto;
+    grid-gap: 20px;
+    max-height: calc(100vh - 82px);
+}

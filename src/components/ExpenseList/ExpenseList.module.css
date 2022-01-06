@@ -1,0 +1,22 @@
+.expenseList {
+    overflow-y: scroll;
+    margin-right: -8px;
+    grid-area: list;
+}
+
+.expenseList::-webkit-scrollbar {
+    width: 6px;
+}
+
+.expenseList::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.2); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2); 
+    border-radius: 10px;
+}
+
+.expenseList::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    box-shadow: inset 0 0 16px #C7D0D9;
+    -webkit-box-shadow: inset 0 0 16px #C7D0D9; 
+    height: 20px;
+} 

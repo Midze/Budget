@@ -1,0 +1,70 @@
+.form {
+    grid-area: form;
+    display: flex;
+    flex-direction: column;
+}
+
+.formRow {
+    display: flex;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.price {
+    width: 5rem;
+    border: none;
+    border-bottom: 1px solid #C7D0D9;
+    background-color: unset;
+    margin: 0 16px;
+    color: #C7D0D9;
+	-moz-appearance: textfield;
+	-webkit-appearance: textfield;
+	appearance: textfield;
+}
+
+.price::-webkit-outer-spin-button,
+.price::-webkit-inner-spin-button {
+	display: none;
+}
+
+.formRowButton {
+    cursor: pointer;
+    display: flex;
+    align-items: flex-end;
+    font-size: 10px;
+    color: #C7D0D9;
+    width: 30px;
+}
+
+.formRowButton:hover {
+    text-decoration: underline;
+}
+
+.formRowButton:hover {
+    color: #fff;
+}
+
+.controls {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.button {
+    color: #D8D9DA;
+    box-sizing: border-box;
+    border-radius: 3px;
+    cursor: pointer;
+    height: 42px;
+    border: 1px solid #1F2226;
+    background-color: #1F2226;
+    transition: 0.2s;
+    width: 45%;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.button:hover {
+    border: 1px solid #D8D9DA;
+    background-color: unset;
+}

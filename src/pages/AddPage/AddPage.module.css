@@ -1,0 +1,29 @@
+.addPage {
+    width: 100%;
+    display: grid;
+    grid-template-areas: 
+    'add total categories'
+    'add chart categories';
+    grid-template-columns: 30fr 50fr 20fr;
+    grid-template-rows: 2fr 4fr;
+    grid-gap: 8px;
+    height: 100%;
+}
+
+.datePickerWrapper {
+    grid-area: datePicker;
+}
+
+.form {
+    grid-area: form;
+}
+
+.totals {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+}
+
+.catigories {
+    padding-right: 8px;
+}

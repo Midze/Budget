@@ -1,0 +1,46 @@
+.datePickerContainer {
+  grid-area: datePicker;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.datePicker {
+  background-color: transparent;
+  border: none;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: #C7D0D9;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 100px;
+  text-align: center;
+}
+
+.datePickerDatesWrapper {
+  background: #141619;
+  border: 1px solid #202226;
+  box-sizing: border-box;
+  border-radius: 3px;
+  padding: 16px;
+  position: relative;
+  box-shadow: 1px 1px 10px #000;
+}
+
+.datePickerDates .react-datepicker__header {
+  background-color: red;
+}
+
+.arrow {
+  cursor: pointer;
+}
+
+.arrow:hover svg {
+  transition: 0.2s;
+  fill: #fff;
+}
+
+.arrowNext {
+  transform: rotate(180deg);
+}

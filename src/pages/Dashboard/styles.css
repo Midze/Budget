@@ -1,0 +1,8 @@
+.dashbord {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 8px;
+    height: 100%;
+    max-height: calc(100vh - 82px)
+}

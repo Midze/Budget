@@ -1,6 +1,7 @@
 .layout {
     position: relative;
-    margin-left: 80px;
-    padding: 16px;
+    margin-left: 65px;
+    padding: 0 16px 16px;
     box-sizing: border-box;
+    height: calc(100vh - 66px);
 }

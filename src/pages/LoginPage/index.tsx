@@ -1,7 +1,6 @@
 import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import Card from '../../components/Card';
-import jwt_decode from 'jwt-decode';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { loginUser, getUser } from '../../store/reducers/UserSlice';
 import './styles.css';

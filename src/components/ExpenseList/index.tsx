@@ -14,11 +14,11 @@ interface ExpenseListProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivEleme
 
 const ExpenseList: React.FC<ExpenseListProps> = ({ className, children, isLoading, expenses = {} }): JSX.Element => {
   const { parentCategory, childCategories } = expenses;
-  const maxValue = parentCategory?.maxValue;
+  const { maxValue, ...rest } = parentCategory;
   return (
     <div className={cn(styles.expenseList, className)}>
       { isLoading && <Plug size='m' type='rect'/>}
-      { (!isLoading && parentCategory) && Object.keys(parentCategory).map((id) => {
+      { (!isLoading && parentCategory) && Object.keys(rest).map((id) => {
         const item = parentCategory[id];
         return (<Expense key={id} id={id} name={item.name} value={item.value} childCategories={childCategories} maxValue={maxValue}/>);
       })} 

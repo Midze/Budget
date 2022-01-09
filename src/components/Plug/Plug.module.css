@@ -19,6 +19,7 @@
 }
 .s {
     height: 25px;
+    margin-bottom: 2px;
 }
 
 @keyframes bg {

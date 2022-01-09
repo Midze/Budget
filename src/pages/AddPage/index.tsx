@@ -26,6 +26,7 @@ interface AddPageProps {
 const AddPage: React.FC<AddPageProps> = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(state => state.expensesData.categories);
+  const userId = useAppSelector(state => state.users.user._id);
   const isLoadingExpenses = useAppSelector(state => state.expensesData.isLoadingExpenses);
   const isLoadingCategories = useAppSelector(state => state.expensesData.isLoadingCategories);
   const { total: dayTotal, expenses, _id: expenseId } = useAppSelector(state => state.expensesData.dayExpenses);
@@ -41,19 +42,24 @@ const AddPage: React.FC<AddPageProps> = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (!categories.length) {
+    if(userId) {
       dispatch(getExpensesData({
-        userId: '61c921a24cc44e4914b85065',
+        userId,
+        day: Number(moment().format('D')),
+        week: Number(moment().format('W')),
+        month: Number(moment().format('M')),
+        year: Number(moment().format('YYYY')),
+      }));
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    if(userId) {
+      dispatch(getExpensesData({
+        userId,
         ...splittedSelectedDate,
       }));
     }
-  }, []);
-
-  useEffect(() => {
-    dispatch(getExpensesData({
-      userId: '61c921a24cc44e4914b85065',
-      ...splittedSelectedDate,
-    }));
   }, [selectedDate]);
 
   return (
@@ -72,11 +78,11 @@ const AddPage: React.FC<AddPageProps> = (): JSX.Element => {
         />
       </Card>
       <Card className={cn(styles.totals)} type="total" title={''}>
-        <Total value={dayTotal} title="Total Day" size='m'  isLoading={isLoadingExpenses}/>
-        <Total value={weekTotal} title="Total Week" size='m'  isLoading={isLoadingExpenses}/>
-        <Total value={monthTotal} title="Total Month" size='m'  isLoading={isLoadingExpenses}/>
+        <Total className={cn(styles.total)} value={dayTotal} title="Total Day" size='m'  isLoading={isLoadingExpenses}/>
+        <Total className={cn(styles.total)} value={weekTotal} title="Total Week" size='m'  isLoading={isLoadingExpenses}/>
+        <Total className={cn(styles.total)} value={monthTotal} title="Total Month" size='m'  isLoading={isLoadingExpenses}/>
       </Card>
-      <Card type="chart" title={'Day'}/>
+      <Card className={cn(styles.chart)} type="chart" title={'Day'}/>
       <Card className={cn(styles.catigories)} type="categories" title={'Categories managment'}>
         <CategoriesManagment
           categories={categories}

@@ -27,3 +27,39 @@
 .catigories {
     padding-right: 8px;
 }
+
+@media (max-width: 1300px) {
+    .addPage {
+        grid-template-areas: 
+        'add total categories'
+        'add total categories';
+        grid-template-columns: 12fr minmax(232px, 8fr) 10fr;
+    }
+
+    .chart {
+        display: none;
+    }
+
+    .totals {
+        flex-direction: column;
+        overflow-y: scroll;
+    }
+    .total {
+        margin-bottom: 16px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .addPage {        
+        grid-template-columns: calc((100vw - 66px) / 2) 232px calc((100vw - 66px) / 2);
+        overflow-x: scroll;
+    }
+}
+
+
+
+@media (max-width: 767px) {
+    .addPage {        
+        grid-template-columns: repeat(3, calc(100vw - 16px));
+    }
+}

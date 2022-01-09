@@ -1,7 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/redux';
 import AddPage from '../../pages/AddPage';
 import Dashboard from '../../pages/Dashboard';
+import LoginPage from '../../pages/LoginPage';
+import ProtectedRout from '../../pages/ProtectedRout';
 import './styles.css';
 
 const Layout = (): JSX.Element => {
@@ -10,20 +13,23 @@ const Layout = (): JSX.Element => {
       <div className="layout">
         <Switch>
           <Route exact path="/">
+            <LoginPage/>
+          </Route>
+          <ProtectedRout exact path="/dashboard">
             <Dashboard/>
-          </Route>
-          <Route exact path="/add">
+          </ProtectedRout>
+          <ProtectedRout exact path="/add">
             <AddPage/>
-          </Route>
-          <Route exact path="/day">
+          </ProtectedRout>
+          <ProtectedRout exact path="/day">
               day
-          </Route>
-          <Route exact path="/month">
+          </ProtectedRout>
+          <ProtectedRout exact path="/month">
               month
-          </Route>
-          <Route exact path="/year">
+          </ProtectedRout>
+          <ProtectedRout exact path="/year">
               year
-          </Route>
+          </ProtectedRout>
           <Route>
               404
           </Route>

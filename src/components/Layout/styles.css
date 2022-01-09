@@ -5,3 +5,18 @@
     box-sizing: border-box;
     height: calc(100vh - 66px);
 }
+
+@media (max-width: 1300px) {
+    .layout {
+        margin-left: 50px;
+        padding: 0 8px 8px;
+        height: calc(100vh - 50px);
+    }
+}
+
+
+@media (max-width: 767px) {
+    .layout {
+        margin-left: 0;
+    }
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import useAuth from '../../hooks/auth';
 import './styles.css';
 
 type objectKeyType = {
@@ -16,7 +17,7 @@ const pathes: objectKeyType = {
 
 const Header = (): JSX.Element => {
   const currentLocation = useLocation();
-  const path = currentLocation.pathname.split('/')[1] || 'dashboard';
+  const path = currentLocation.pathname.split('/')[1] || '';
   
   return (
     <div className="header">

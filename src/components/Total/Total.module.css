@@ -29,9 +29,9 @@
 
 .circle_m {
     max-height: 203px;
-    height: 24vh;
+    height: 13vw;
     max-width: 203px;
-    width: 24vh;
+    width: 13vw;
     font-size: 24px;
     border: 2px solid #C7D0D9;
 }
@@ -60,5 +60,29 @@
     }
     100% {
         background: rgba(28, 30, 34);
+    }
+}
+
+@media (max-width: 1500px) {
+    .circle_l {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 1300px) {
+    .circle_l {
+        font-size: 28px;
+        border: 2px solid #C7D0D9;
+    }
+    .circle_m {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .circle_l {
+        width: 230px;
+        height: 230px;
     }
 }

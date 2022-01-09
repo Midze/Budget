@@ -5,30 +5,41 @@ import styles from './Form.module.css';
 interface InputProps {
   placeholder: string;
   name: string;
-  price?: number;
-  onChange: (a:string, c:number) => void;
+  price?: number | string;
+  // onChange: (a:string, c:number) => void;
+  onChange: (index:number, value: string | number, name: string) => void;
+  index: number;
+  error: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
   placeholder,
   name,
-  price,
+  price = '',
   onChange,
+  index,
+  error
 }) => {
   const [value, setValue] = useState(price);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(Number(e.target.value));
-    onChange(name, Number(e.target.value));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    if (e.target.value.match(/^\d{1,}(\.\d{0,4})?$/)) setValue(e.target.value);
   };
-
+  const leaveFocus = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    onChange(index, name, Number(e.target.value).toFixed(2));
+  };
+  
   return (
     <input
-      className={cn(styles.price)}
-      type="number"
+      key={`price_${index}`}
+      className={cn(styles.price, {
+        [styles.error]: error,
+      })}
+      type="text"
       placeholder={placeholder}
       value={value}
       onChange={handleChange}
+      onBlur={leaveFocus}
       name={name}
     />
   );

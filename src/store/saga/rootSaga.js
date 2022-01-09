@@ -17,6 +17,12 @@ import {
   createCategorySuccess,
   createCategoryFail
 } from '../reducers/ExpensesSlice';
+import {
+  loginUserFail,
+  loginUserSuccess,
+  getUserFail,
+  getUserSuccess
+} from '../reducers/UserSlice';
 import { ExpensesData } from '../../types/interfaces';
 
 const defaultOptions = {
@@ -262,11 +268,71 @@ function* createCategorySaga({ payload }) {
   }
 }
 
+function* loginUserSaga({ payload }) {
+  try {
+    console.log('User LOgin', payload);
+    const mutation = gql`mutation login($email: String!, $password: String!) {
+      login(email: $email, password: $password){
+        token
+        user {
+          _id
+          login
+          email
+        }
+      }
+    }`;
+    const options = {
+      mutation,
+      variables: {...payload},
+    };
+  
+    const { login } = yield call(executeMutation, options);
+    console.log('data', login);
+    return yield put(loginUserSuccess({
+      ...login,
+    }));
+  } catch (error) {
+    console.log(error);
+    return yield put(loginUserFail({
+      ...error,
+    }));
+  }
+}
+
+function* getUserSaga({ payload }) {
+  try {
+    const query = gql`query getCurrentUser($id: String!){
+      getCurrentUser(id: $id){
+        email
+        _id
+        login
+      }
+    }`;
+    const options = {
+      query,
+      variables: {...payload},
+    };
+  
+    const { getCurrentUser } = yield call(executeQuery, options);
+    console.log('data', getCurrentUser);
+    return yield put(getUserSuccess({
+      ...getCurrentUser,
+    }));
+  } catch (error) {
+    console.log(error);
+    return yield put(getUserFail({
+      ...error,
+    }));
+  }
+}
+
 export default function* ExpensesDataSaga() {
   yield takeEvery('expensesData/getExpensesData', getExpensesDataSaga);
   yield takeEvery('expensesData/updateExpenses', updateExpensesSaga);
   yield takeEvery('expensesData/createExpenses', createExpensesSaga);
   yield takeEvery('expensesData/createCategory', createCategorySaga);
+  yield takeEvery('user/loginUser', loginUserSaga);
+  yield takeEvery('user/getUser', getUserSaga);
 }
 
 

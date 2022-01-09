@@ -14,6 +14,7 @@ import './styles.css';
 const Dashboard = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(state => state.expensesData.categories);
+  const userId = useAppSelector(state => state.users.user._id);
   const dayExpensesByCategory = useAppSelector(state => state.expensesData.dayExpensesByCategory);
   const weekExpensesByCategory = useAppSelector(state => state.expensesData.weekExpensesByCategory);
   const monthExpensesByCategory = useAppSelector(state => state.expensesData.monthExpensesByCategory);
@@ -27,14 +28,16 @@ const Dashboard = (): JSX.Element => {
 
   
   useEffect(() => {
-    dispatch(getExpensesData({
-      userId: '61c921a24cc44e4914b85065',
-      day: Number(moment().format('D')),
-      week: Number(moment().format('W')),
-      month: Number(moment().format('M')),
-      year: Number(moment().format('YYYY')),
-    }));
-  }, []);
+    if(userId) {
+      dispatch(getExpensesData({
+        userId,
+        day: Number(moment().format('D')),
+        week: Number(moment().format('W')),
+        month: Number(moment().format('M')),
+        year: Number(moment().format('YYYY')),
+      }));
+    }
+  }, [userId]);
   console.log('monthExpensesByCategory',monthExpensesByCategory );
 
   return (

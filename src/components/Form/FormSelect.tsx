@@ -12,26 +12,30 @@ interface FormSelectProps {
     label: string
   }[];
   name: string;
-  onChange: (name:string, value:number | string) => void;
+  index: number;
+  onChange: (index:number, value: string | number, name: string) => void;
+  error: boolean;
 }
 
 
 
 const colorStyles: StylesConfig = {
-  control: (styles) => ({
+  control: (styles, state) => ({
     ...styles,
-    backgroundColor: '#141619',
+    backgroundColor: 'transparent',
     borderTop: 'none',
     borderLeft: 'none',
     borderRight: 'none',
     borderRadius: 0,
+    borderColor: state.selectProps.borderColor,
   }),
-  menu: (styles) => {    
+  menu: (styles, state) => {    
     return {
       ...styles,
       backgroundColor: '#0B0C0D',
       position: 'absolute',
-      top: '30px',
+      top: state.selectProps.index >= 5 ? 'unset' : '30px',
+      bottom: state.selectProps.index >= 5 ? '-5px' : 'unset',
     };
   },
   menuList: (styles) => {
@@ -78,20 +82,26 @@ const FormSelect: React.FC<FormSelectProps> = ({
   categories,
   selected,
   name,
+  index,
   onChange,
+  error
 }) => {
 
   const handleChange = (newValue: {value: string, label: string}) => {
-    onChange(name, newValue.value);
+    onChange(index, name, newValue.value);
   };
   
   return (
     <Select
       styles={colorStyles}
+      borderColor={error ? 'tomato' : '#C7D0D9'}
       options={categories}
       defaultValue={selected}
       placeholder={placeholder}
       onChange={handleChange}
+      menuPosition='fixed'
+      index={index}
+      menuPlacement={'top'}
     />
   );
 };

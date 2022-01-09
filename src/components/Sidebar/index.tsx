@@ -1,18 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './styles.css';
 
 const Sidebar = (): JSX.Element => {
+  const [open, setOpen] = useState(false);
+  const handleMenu = () => {
+    if(open) {
+      setOpen(false);
+    } else setOpen(true);
+  };
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${open ? 'open' : ''}`} onClick={handleMenu}>
       <ul className="sidebar__nav">
+        <li className="sidebar__link-item">
+          <div className={`burger ${open ? 'open' : ''}`} onClick={handleMenu}>
+            <div className="line"></div>
+            <div className="line"></div>
+            <div className="line"></div>
+          </div>
+        </li>
         <li className="sidebar__link-item">
           <Link to="/account">
             <div className="account-link">MK</div>
           </Link>
         </li>
         <li className="sidebar__link-item">
-          <Link to="/">
+          <Link to="/dashboard">
             <i className="icon icon-dashboard"/>
           </Link>
         </li>

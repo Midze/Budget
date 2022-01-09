@@ -48,9 +48,10 @@ function sortObject(sortingObject) {
 function getExpensesByCategories(parentCategories, childCategories, expenses) {
   const parent = JSON.parse(JSON.stringify(parentCategories));
   const child = JSON.parse(JSON.stringify(childCategories));
+  
   expenses.forEach(expense => {
     const isParentCategory = parent[expense.category];
-    const expenseValue = expense.price || 0;
+    const expenseValue = Number(expense.price) || 0;
     if (isParentCategory) {
       parent[expense.category].value += expenseValue;
     } else {
@@ -80,8 +81,20 @@ const initialState:ExpensesDataState = {
     total: 0,
     expenses: []
   },
-  isLoadingExpenses: false,
-  isLoadingCategories: false,
+  dayExpensesByCategory: {
+    parentCategory: {},
+    childCategories: {}
+  },
+  weekExpensesByCategory: {
+    parentCategory: {},
+    childCategories: {}
+  },
+  monthExpensesByCategory: {
+    parentCategory: {},
+    childCategories: {}
+  },
+  isLoadingExpenses: true,
+  isLoadingCategories: true,
   error: '',
 };
 

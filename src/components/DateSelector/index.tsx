@@ -37,7 +37,7 @@ const DateSelector: React.FC<DateSelectorProps> = ({className, changeDate}): JSX
         calendarClassName={cn(styles.datePickerDatesWrapper)}
         selected={startDate}
         dateFormat="dd/MM/yyyy"
-        onChange={(date: Date) => setStartDate(date)}
+        onChange={(date: Date) => changeDate(moment(date))}
       />
       <ArrowIcon
         className={cn(styles.arrow, styles.arrowNext)}

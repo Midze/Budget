@@ -28,6 +28,7 @@ const Expense: React.FC<ExpenseProps> = ({
   const width = `${length}%`;
   const [isActive, setIsActive] = useState(false);
   const children = [];
+  
   Object.keys(childCategories).forEach((_id) => {
     const child = childCategories[_id];
     if (child.childOf === id) {

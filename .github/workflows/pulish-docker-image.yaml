@@ -4,7 +4,11 @@
 # documentation.
 
 name: Create and publish a Docker image
-
+uses: docker/login-action@v1
+  with:
+    registry: ghcr.io
+    username: ${{github.actor}}
+    password: ${{secrets.GITHUB_TOKEN}}
 on:
   push:
     branches: ['master']

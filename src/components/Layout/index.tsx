@@ -15,7 +15,7 @@ const Layout = (): JSX.Element => {
           <Route exact path="/">
             <LoginPage/>
           </Route>
-          <ProtectedRout exact path="/dashboard">
+          <ProtectedRout path="/dashboard">
             <Dashboard/>
           </ProtectedRout>
           <ProtectedRout exact path="/add">

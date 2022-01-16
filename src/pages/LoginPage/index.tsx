@@ -20,6 +20,7 @@ const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const userId = useAppSelector(state => state.users.user._id);
   const isLoadingUsers = useAppSelector(state => state.users.isLoading);
+  const { message } = useAppSelector(state => state.users.error);
   const [formData, setFormData] = useState(initialFormData);
   const [isLoading, setIsLoading] = useState(isLoadingUsers);
   const handleInputChange:ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -43,7 +44,11 @@ const LoginPage: React.FC = () => {
       } else setIsLoading(false);
     }
   }, []);
-
+  
+  const onFocusHandler = (e: React.FocusEvent<HTMLInputElement, Element>) => {
+    e.currentTarget.removeAttribute('readonly');
+    e.currentTarget.autocomplete = 'off';
+  };
   return (
     <>
       {userId ? <Redirect to='/dashboard'/> :
@@ -56,7 +61,9 @@ const LoginPage: React.FC = () => {
                 placeholder='Email'
                 name='email'
                 value={formData.email}
+                // readOnly
                 onChange={handleInputChange}
+                // onFocus={onFocusHandler}
               />
               <input
                 className='login-form__input'
@@ -64,10 +71,13 @@ const LoginPage: React.FC = () => {
                 placeholder='Password'
                 name='password'
                 value={formData.password}
+                // readOnly
                 onChange={handleInputChange}
+                // onFocus={onFocusHandler}
               />
               <input className='login-form__button' type="submit" value="Login" />
             </form>
+            <div className="error">{message}</div>
           </Card>}
         </div> 
       }

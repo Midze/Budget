@@ -45,22 +45,10 @@ const AddPage: React.FC<AddPageProps> = (): JSX.Element => {
     if(userId) {
       dispatch(getExpensesData({
         userId,
-        day: Number(moment().format('D')),
-        week: Number(moment().format('W')),
-        month: Number(moment().format('M')),
-        year: Number(moment().format('YYYY')),
-      }));
-    }
-  }, [userId]);
-
-  useEffect(() => {
-    if(userId) {
-      dispatch(getExpensesData({
-        userId,
         ...splittedSelectedDate,
       }));
     }
-  }, [selectedDate]);
+  }, [selectedDate, userId]);
 
   return (
     <div className={cn(styles.addPage)}>
@@ -74,7 +62,7 @@ const AddPage: React.FC<AddPageProps> = (): JSX.Element => {
           expenses={expenses}
           currentDate={splittedSelectedDate}
           expenseId={expenseId}
-          isLoading={isLoadingExpenses && isLoadingCategories}
+          isLoading={isLoadingExpenses}
         />
       </Card>
       <Card className={cn(styles.totals)} type="total" title={''}>

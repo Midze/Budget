@@ -27,7 +27,7 @@
   justify-content: space-between;
   overflow: hidden;
   margin-bottom: 16px;
-  transition: 0.3s;
+  transition: all 0.3s;
 }
 
 .parentName {

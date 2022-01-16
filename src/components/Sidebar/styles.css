@@ -28,7 +28,7 @@
 }
 
 .sidebar__link-item:nth-child(1) {
-    margin-bottom: 66px;
+    margin-bottom: 0;
 }
 
 .account-link {

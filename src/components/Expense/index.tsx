@@ -10,11 +10,14 @@ interface ExpenseProps {
   id: string;
   value: number;
   maxValue?: number;
-  childCategories: {[index: string]: Category & {
-    value: number
-  }};
+  childCategories: {
+    [index: string]: Category 
+    & {
+      value: number
+    }
+  };
 }
-//parent Category
+
 const Expense: React.FC<ExpenseProps> = ({
   className,
   id,
@@ -27,13 +30,14 @@ const Expense: React.FC<ExpenseProps> = ({
   const background = `linear-gradient(90deg, ${colors[name]} 0%, rgba(93, 129, 83, 0) 100%)`;
   const width = `${length}%`;
   const [isActive, setIsActive] = useState(false);
-  const children = [];
+  const children: JSX.Element[] = [];
+  console.log('childCategories', childCategories);
   
-  Object.keys(childCategories).forEach((_id) => {
+  Object.keys(childCategories).forEach((_id, index) => {
     const child = childCategories[_id];
     if (child.childOf === id) {
       children.push(
-        <div className={cn(styles.expense, styles.child)} >
+        <div key={`${_id}_${index}`} className={cn(styles.expense, styles.child)} >
           <div 
             className={cn(styles.background)}
             style={{background, width: isActive ? `${child.value / (value / 100)}%` : '1px'}}
@@ -53,6 +57,7 @@ const Expense: React.FC<ExpenseProps> = ({
 
   return (
     <div
+      data-testid='dashboard-expense'
       className={cn(styles.expense, className, {
         [styles.active]: isActive,
       })}

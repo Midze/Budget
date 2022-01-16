@@ -52,6 +52,7 @@
     grid-template-rows: 32px 15vw auto;
     grid-gap: 20px;
     max-height: calc(100vh - 82px);
+    overflow: auto;
 }
 
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import './App.css';
-import Header from './components/Header';
-import Layout from './components/Layout';
-import Sidebar from './components/Sidebar';
+import Header from '../Header';
+import Layout from '../Layout';
+import Sidebar from '../Sidebar';
 
 function App(): JSX.Element {
   return (

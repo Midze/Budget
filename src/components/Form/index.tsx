@@ -45,8 +45,6 @@ const AddForm: React.FC<AddFormProps> = ({className, categories, currentDate, ex
       setFormData([...formData, newRow]);
       setErrors({});
     } else {
-      console.log('Pidor');
-
       const newError = {
         [lastIndex]: {
           category: !category,
@@ -55,8 +53,7 @@ const AddForm: React.FC<AddFormProps> = ({className, categories, currentDate, ex
       };
       setErrors(newError);
     }
-  };
-  
+  };  
   const deleteRow = (rowIndex:number):void => {
     const updateFormData = formData.filter((item, index) => {
       return index !== rowIndex;
@@ -97,8 +94,6 @@ const AddForm: React.FC<AddFormProps> = ({className, categories, currentDate, ex
       }
     });
     setErrors(errorsOnSubmit);
-    console.log(errorsOnSubmit);
-
     if (expenseId && !isErrors) {
       return dispatch(updateExpenses({
         _id: expenseId,
@@ -107,7 +102,7 @@ const AddForm: React.FC<AddFormProps> = ({className, categories, currentDate, ex
         },
       }));
     } 
-    if (!isErrors) {
+    if (!isErrors) {      
       return dispatch(createExpenses({
         createExpensesInput: {
           userId: '61c921a24cc44e4914b85065',
@@ -148,7 +143,7 @@ const AddForm: React.FC<AddFormProps> = ({className, categories, currentDate, ex
           </div>}
         </div>}
         <div className={cn(styles.controls)}>
-          <input className={cn(styles.button, styles.save)} type="submit" value="Save" />
+          <input className={cn(styles.button, styles.save)} type="submit" value={isLoading ? 'Loading...' : 'Save'} />
           <input
             className={cn(styles.button, styles.cancel)}
             type="button"

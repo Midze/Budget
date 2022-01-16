@@ -8,4 +8,5 @@ export const colors = {
   'appliances': '#CCCC33	',
   'clothes': '#333399',
   'utilities': '#AA41CA',
+  'alcohol': '#1513af',
 };

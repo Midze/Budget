@@ -33,7 +33,10 @@ const LoginPage: React.FC = () => {
   };
   const handleFormSubmit:FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    dispatch(loginUser({...formData}));    
+    dispatch(loginUser({
+      ...formData,
+      email: formData.email.toLowerCase(),
+    }));    
   };
 
   useEffect(() => {
@@ -45,10 +48,10 @@ const LoginPage: React.FC = () => {
     }
   }, []);
   
-  const onFocusHandler = (e: React.FocusEvent<HTMLInputElement, Element>) => {
-    e.currentTarget.removeAttribute('readonly');
-    e.currentTarget.autocomplete = 'off';
-  };
+  // const onFocusHandler = (e: React.FocusEvent<HTMLInputElement, Element>) => {
+  //   e.currentTarget.removeAttribute('readonly');
+  //   e.currentTarget.autocomplete = 'off';
+  // };
   return (
     <>
       {userId ? <Redirect to='/dashboard'/> :

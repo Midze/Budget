@@ -23,7 +23,12 @@ const Input: React.FC<InputProps> = ({
   const [value, setValue] = useState(price);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    if (e.target.value.match(/^\d{1,}(\.\d{0,4})?$/)) setValue(e.target.value);
+    
+    if (e.target.value.match(/^\d{1,}(\.\d{0,4})?$/)) {
+      setValue(e.target.value);
+    } else if ( e.target.value === '') {
+      setValue(e.target.value);
+    }
   };
   const leaveFocus = (e: React.ChangeEvent<HTMLInputElement>): void => {
     onChange(index, name, Number(e.target.value).toFixed(2));

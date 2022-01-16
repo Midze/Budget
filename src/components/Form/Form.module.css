@@ -86,14 +86,7 @@ height: 20px;
     border-bottom: 1px solid #C7D0D9;
     background-color: unset;
     color: #C7D0D9;
-	-moz-appearance: textfield;
-	-webkit-appearance: textfield;
-	appearance: textfield;
-}
-
-.price::-webkit-outer-spin-button,
-.price::-webkit-inner-spin-button {
-	display: none;
+    font-size: 16px;
 }
 
 .controls {

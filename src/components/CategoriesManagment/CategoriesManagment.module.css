@@ -1,7 +1,5 @@
 .categoryManagment {
-  padding-top: 24px;
   overflow-y: scroll;
-  height: calc(100vh - 161px);
 }
 
 .categoryManagment::-webkit-scrollbar {
@@ -27,8 +25,7 @@
   justify-content: space-between;
   overflow: hidden;
   margin-bottom: 16px;
-  -webkit-transition: max-height .3s, padding .3s;
-  transition: max-height .3s, padding .3s;
+  transition: 0.3s;
 }
 
 .parentName {

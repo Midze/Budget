@@ -1,10 +1,10 @@
-import React, { DetailedHTMLProps, InputHTMLAttributes, MutableRefObject, useRef, useState } from 'react';
-import { Category } from '../../types/interfaces';
+import React, { useState } from 'react';
+import { Category } from '../../data/types/interfaces';
 import ParentCategory from './ParentCategory';
 import cn from 'classnames';
 import styles from './CategoriesManagment.module.css';
-import { useAppDispatch } from '../../hooks/redux';
-import { createCategory } from '../../store/reducers/ExpensesSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { createCategory } from '../../data/reducers/ExpensesSlice';
 import Plug from '../Plug';
 
 interface CategoriesManagmentProps {
@@ -14,8 +14,8 @@ interface CategoriesManagmentProps {
 
 const CategoriesManagment: React.FC<CategoriesManagmentProps> = ({categories, isLoading}): JSX.Element => {
   const dispatch = useAppDispatch();
+  const { parentCategories, childCategories} = useAppSelector(state => state.expensesData);
   const [inputValue, setInputValue] = useState('');
-  const refInput = useRef<HTMLInputElement>(null);
   const parents: [Category] | [] = [];
   const children: {[key:string]: [Category] | []} = {};
   const addCategory = (childOf: string | null = null, name: string) => {
@@ -31,33 +31,35 @@ const CategoriesManagment: React.FC<CategoriesManagmentProps> = ({categories, is
   const handleClick = () => {
     addCategory(null, inputValue);
   };
-
-  categories.forEach((item: Category) => {
-    if (item.childOf) {
-      if(!children[item.childOf]) {
-        children[item.childOf] = [item];
-      } else children[item.childOf].push(item);
-    } else {
-      if (!children[item._id]) {
-        children[item._id] = [];
-      }
-      parents.push(item);
-    }
-  });
+  // console.log('categories', categories);
+  
+  // categories.forEach((item: Category) => {
+  //   if (item.childOf) {
+  //     if(!children[item.childOf]) {
+  //       children[item.childOf] = [item];
+  //     } else children[item.childOf].push(item);
+  //   } else {
+  //     if (!children[item._id]) {
+  //       children[item._id] = [];
+  //     }
+  //     parents.push(item);
+  //   }
+  // });
   
   const isDataLoaded = !!categories.length;
   const isFetching = isLoading;
   return (
     <div className={cn(styles.categoryManagment)}>
       { !isDataLoaded && <Plug size='m' type='rect'/>}
-      {isDataLoaded && parents.map((item: Category) => {
+      {isDataLoaded && Object.keys(parentCategories).map((id: string) => {
+        const parent = parentCategories[id];
         return (
           <ParentCategory
-            key={item._id}
-            name={item.name}
-            id={item._id}
-            isDefault={item.userId === 'default'}
-            childCategories={children[item._id]}
+            key={parent._id}
+            name={parent.name}
+            id={parent._id}
+            isDefault={parent.userId === 'default'}
+            childCategories={parent.children}
             addCategory={addCategory}
             isFetching={isFetching}
           />

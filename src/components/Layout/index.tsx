@@ -18,16 +18,16 @@ const Layout = (): JSX.Element => {
           <ProtectedRout path="/dashboard">
             <Dashboard/>
           </ProtectedRout>
-          <ProtectedRout exact path="/add">
+          <ProtectedRout path="/add">
             <AddPage/>
           </ProtectedRout>
-          <ProtectedRout exact path="/day">
+          <ProtectedRout path="/day">
               day
           </ProtectedRout>
-          <ProtectedRout exact path="/month">
+          <ProtectedRout path="/month">
               month
           </ProtectedRout>
-          <ProtectedRout exact path="/year">
+          <ProtectedRout path="/year">
               year
           </ProtectedRout>
           <Route>

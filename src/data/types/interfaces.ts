@@ -1,7 +1,7 @@
 export interface User {
-  _id?: string;
-  login?: string;
-  email?: string;
+  _id: string;
+  login: string;
+  email: string;
 }
 
 export interface Category {
@@ -28,25 +28,32 @@ export interface Expense {
   category: string;
 }
 
+export interface ChildCategory {
+  [index: string]: Category & {
+    value: number
+  }
+}
+
+export interface ParentCategory {
+  [index: string]: Category & {
+    value: number;
+    children: Category[];
+  };
+}
+
 export interface ExpensesData {
   categories: Category[];
   dayExpenses: Expenses;
   weekExpenses: Expenses;
   monthExpenses: Expenses;
+  parentCategory: ParentCategory;
+  childCategories: ChildCategory;
 }
 
 export interface ExpensesByCategory {
-  parentCategory: {
-    [index: string]: Category & {
-      value: number;
-      children: Category[];
-    }
-  };
-  childCategories: {
-    [index: string]: Category & {
-      value: number
-    }
-  };
+  parentCategory: ParentCategory;
+  childCategories: ChildCategory;
+  maxValue: number;
 }
 
 export interface GetExpensesInput {

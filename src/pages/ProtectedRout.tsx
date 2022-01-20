@@ -4,7 +4,13 @@ import useAuth from '../hooks/auth';
 // import useAuth from '../hooks/auth';
 import { useAppSelector } from '../hooks/redux';
 
-const ProtectedRout = (props) => {
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+  exact?: boolean;
+  path: string;
+}
+
+const ProtectedRout: React.FC<ProtectedRouteProps> = (props) => {
   // const isAuth = useAuth('protectedroute');
   const userId = useAppSelector(state => state.users.user._id);
   const location = useLocation().pathname;

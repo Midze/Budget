@@ -5,8 +5,8 @@ import Expense from '../../components/Expense';
 import ExpenseList from '../../components/ExpenseList';
 import Total from '../../components/Total';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { getExpensesData } from '../../store/reducers/ExpensesSlice';
-import { Category, Expense as ExpenseI } from '../../types/interfaces';
+import { getExpensesData } from '../../data/reducers/ExpensesSlice';
+import { Category, Expense as ExpenseI } from '../../data/types/interfaces';
 import './styles.css';
 
 
@@ -38,7 +38,9 @@ const Dashboard = (): JSX.Element => {
       }));
     }
   }, [userId]);
-  console.log('monthExpensesByCategory',monthExpensesByCategory );
+  // console.log('dayExpensesByCategory',dayExpensesByCategory );
+  // console.log('weekExpensesByCategory',weekExpensesByCategory );
+  // console.log('monthExpensesByCategory',monthExpensesByCategory );
 
   return (
     <div className="dashbord">

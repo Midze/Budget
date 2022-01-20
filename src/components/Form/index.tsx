@@ -6,10 +6,10 @@ import FormRow from './FormRow';
 import styles from './Form.module.css';
 import Plug from './../Plug';
 import PlusIcon from './../../Icons/PlusIcon';
-import { Expense } from '../../types/interfaces';
+import { Expense } from '../../data/types/interfaces';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { createExpenses, expensesDataSlice, updateExpenses } from '../../store/reducers/ExpensesSlice';
+import { createExpenses, expensesDataSlice, updateExpenses } from '../../data/reducers/ExpensesSlice';
 
 interface AddFormProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   className?: string;
@@ -24,14 +24,15 @@ interface AddFormProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>,
     month: number;
     year: number;
   };
-  expenseId: string | null;
+  expenseId: string | undefined;
   isLoading: boolean;
 }
 
 const AddForm: React.FC<AddFormProps> = ({className, categories, currentDate, expenseId, isLoading}) => {
   const dispatch = useAppDispatch();
   const { total: dayTotal, expenses, _id } = useAppSelector(state => state.expensesData.dayExpenses);
-  const [formData, setFormData] = useState(expenses); 
+  
+  const [formData, setFormData] = useState<Expense[]>(expenses); 
   const [errors, setErrors] = useState<{[key: number]:{price: boolean, category: boolean}}>({}); 
   const addRow = (): void => {
     const lastIndex = formData.length - 1;
@@ -63,8 +64,12 @@ const AddForm: React.FC<AddFormProps> = ({className, categories, currentDate, ex
   const restoreFormData = () => {
     setFormData([...expenses]);
   };
-  const setFieldValue = (index, name, value) => {
+  const setFieldValue = (index: number, value: string | number, name: string,) => {
     // const rowData = {...formData[index], [name]: value};
+    console.log('index', index);
+    console.log('name', name);
+    console.log('value', value);
+    
     const rowData = {...formData[index], [name]: name === 'price' ? Number(value).toFixed(2) : value};
   
     if(errors[index]) {
@@ -82,7 +87,7 @@ const AddForm: React.FC<AddFormProps> = ({className, categories, currentDate, ex
   };
   const submitForm = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const errorsOnSubmit = {};
+    const errorsOnSubmit: {[key: number]: {price: boolean, category: boolean}} = {};
     let isErrors = false;
     formData.forEach((row, index) => {
       errorsOnSubmit[index] = {
@@ -95,21 +100,23 @@ const AddForm: React.FC<AddFormProps> = ({className, categories, currentDate, ex
     });
     setErrors(errorsOnSubmit);
     if (expenseId && !isErrors) {
-      return dispatch(updateExpenses({
+      dispatch(updateExpenses({
         _id: expenseId,
         updateExpenseInput: {
           expenses: formData,
         },
       }));
+      return;
     } 
     if (!isErrors) {      
-      return dispatch(createExpenses({
+      dispatch(createExpenses({
         createExpensesInput: {
           userId: '61c921a24cc44e4914b85065',
           ...currentDate,
           expenses: formData
         }
       }));
+      return;
     }
   };
   

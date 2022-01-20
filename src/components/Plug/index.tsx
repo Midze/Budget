@@ -6,10 +6,10 @@ interface PlugProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HT
   className?: string;
   type: string;
   size: string;
-  count?: number
+  count?: number;
 }
 
-const Plug: React.FC<PlugProps> = ({ className, type, size, count}): JSX.Element => {
+const Plug: React.FC<PlugProps> = ({ className, type, size, count=0}): JSX.Element => {
   const plugsQuantity = (type === 'circle' || count) ? count : +(Math.random() * 10).toFixed();
   const createPlugs = (quantity: number) => {
     const plugs = [];

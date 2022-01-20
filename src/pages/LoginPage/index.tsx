@@ -2,7 +2,7 @@ import React, { ChangeEventHandler, FormEventHandler, useEffect, useState } from
 import { Redirect } from 'react-router-dom';
 import Card from '../../components/Card';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { loginUser, getUser } from '../../store/reducers/UserSlice';
+import { loginUser, getUser } from '../../data/reducers/UserSlice';
 import './styles.css';
 import checkAuth from '../../hooks/auth';
 
@@ -20,7 +20,7 @@ const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const userId = useAppSelector(state => state.users.user._id);
   const isLoadingUsers = useAppSelector(state => state.users.isLoading);
-  const { message } = useAppSelector(state => state.users.error);
+  const message = useAppSelector(state => state.users.error);
   const [formData, setFormData] = useState(initialFormData);
   const [isLoading, setIsLoading] = useState(isLoadingUsers);
   const handleInputChange:ChangeEventHandler<HTMLInputElement> = (e) => {

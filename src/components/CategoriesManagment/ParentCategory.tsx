@@ -2,14 +2,14 @@ import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 import styles from './CategoriesManagment.module.css';
 import ChildCategory from './ChildCategory';
-import { Category } from '../../types/interfaces';
+import { Category } from '../../data/types/interfaces';
 import { useAppDispatch } from '../../hooks/redux';
 import Plug from '../Plug';
 
 interface ParentCategoryProps {
   name: string;
   id: string;
-  childCategories: [Category] | [];
+  childCategories: Category[];
   isDefault: boolean;
   addCategory: (childOf:string, name: string) => void;
   isFetching: boolean;
@@ -19,19 +19,23 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({name, id, childCategorie
   const [inputValue, setInputValue] = useState('');
   const [isActive, setIsActive] = useState(false);
   const [height, setHeight] = useState(0);
-  const container = useRef(null);
+  const container = useRef<HTMLDivElement | null>(null);
   const buttonHandler = () => {
     addCategory(id, inputValue);
     setInputValue('');
   };
   const handleClick = () => {
     setIsActive(!isActive);
-    setHeight(container?.current?.clientHeight + 27);
+    if(container && container.current) {
+      setHeight(container?.current?.clientHeight + 27);
+    }
   };  
 
   useEffect(() => {
     if(isActive) {      
-      setHeight(container?.current?.clientHeight + 27);
+      if(container && container.current) {
+        setHeight(container?.current?.clientHeight + 27);
+      }
     }
   }, [childCategories]);
 

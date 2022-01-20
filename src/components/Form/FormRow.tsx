@@ -17,6 +17,12 @@ interface FormRowProps
   index: number;
   remove: (rowIndex:number) => void;
   setFieldValue: (index:number, value: string | number, name: string) => void;
+  error: {
+    [key: number]: {
+      category: boolean;
+      price: boolean;
+    };
+  };
 }
 
 const FormRow: React.FC<FormRowProps> = ({

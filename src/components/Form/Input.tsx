@@ -31,7 +31,7 @@ const Input: React.FC<InputProps> = ({
     }
   };
   const leaveFocus = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    onChange(index, name, Number(e.target.value).toFixed(2));
+    onChange(index, Number(e.target.value).toFixed(2), name);
   };
   const onFocusHandler = (e: React.FocusEvent<HTMLInputElement, Element>) => {
     e.currentTarget.autocomplete = 'off';

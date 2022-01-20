@@ -2,28 +2,28 @@ import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { getExpensesData } from '../../store/reducers/ExpensesSlice';
+import { getExpensesData } from '../../data/reducers/ExpensesSlice';
 
 import Card from '../../components/Card';
 import AddForm from '../../components/Form';
 import Total from '../../components/Total';
 import CategoriesManagment from '../../components/CategoriesManagment';
 
-import { Category, Expense } from '../../types/interfaces';
+import { Category, Expense } from '../../data/types/interfaces';
 
 import styles from './AddPage.module.css';
 import moment from 'moment';
 import DateSelector from '../../components/DateSelector';
 
-interface AddPageProps {
-  categories: Category[];
-  dayTotal: number;
-  weekTotal: number;
-  monthTotal: number;
-  expenses: Expense[];
-}
+// interface AddPageProps {
+//   categories: Category[];
+//   dayTotal: number;
+//   weekTotal: number;
+//   monthTotal: number;
+//   expenses: Expense[];
+// }
 
-const AddPage: React.FC<AddPageProps> = (): JSX.Element => {
+const AddPage: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const categories = useAppSelector(state => state.expensesData.categories);
   const userId = useAppSelector(state => state.users.user._id);

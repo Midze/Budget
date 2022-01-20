@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   Category,
+  ChildCategory,
   CreateCategoryInput,
   CreateExpensesInput,
   Expense,
@@ -8,14 +9,17 @@ import {
   ExpensesByCategory,
   ExpensesData,
   GetExpensesInput,
+  ParentCategory,
   UpdateExpensesInput,
-} from '../../types/interfaces';
+} from './../types/interfaces';
 
 interface ExpensesDataState {
   categories: Category[],
   dayExpenses: Expenses,
   weekExpenses: Expenses,
   monthExpenses: Expenses,
+  parentCategories: ParentCategory,
+  childCategories: ChildCategory,
   dayExpensesByCategory: ExpensesByCategory,
   weekExpensesByCategory: ExpensesByCategory,
   monthExpensesByCategory: ExpensesByCategory,
@@ -24,30 +28,47 @@ interface ExpensesDataState {
   error: string;
 }
 
-function sortObject(sortingObject) {
-  const sortingArray = [];
-  const sortedObject = {};
-
-  Object.keys(sortingObject).forEach(item => {
-    if(sortingObject[item].value) {
-      sortingArray.push({value: sortingObject[item].value, id: item});
+function sortObjects(parent: ParentCategory, child: ChildCategory) {
+  const sortingParentArray: {value: number, id: string}[] = [];
+  const sortingChildArray: {value: number, id: string}[] = [];
+  const sortedParentObject: ParentCategory = {};
+  const sortedChldObject: ChildCategory = {};
+  let maxValue = 0;
+  Object.keys(parent).forEach(item => {
+    if(parent[item].value) {
+      sortingParentArray.push({value: parent[item].value, id: item});
     }
   });
     
-  sortingArray.sort(function(a, b) {return b.value - a.value;});
-  sortingArray.forEach((item, index) => {
+  sortingParentArray.sort(function(a, b) {return b.value - a.value;});
+  sortingParentArray.forEach((item, index) => {
     if(index === 0) {
-      sortedObject.maxValue = sortingObject[item.id].value;
+      maxValue = parent[item.id].value;
     }
     
-    sortedObject[item.id] = sortingObject[item.id];
-  }); 
-  return sortedObject;
+    sortedParentObject[item.id] = parent[item.id];
+  });
+  Object.keys(child).forEach(item => {
+    if(child[item].value) {
+      sortingChildArray.push({value: child[item].value, id: item});
+    }
+  });
+    
+  sortingChildArray.sort(function(a, b) {return b.value - a.value;});
+  sortingChildArray.forEach((item, index) => {    
+    sortedChldObject[item.id] = child[item.id];
+  });
+  return {
+    parentCategory: sortedParentObject,
+    childCategories: sortedChldObject,
+    maxValue,
+  };
 }
 
-function getExpensesByCategories(parentCategories, childCategories, expenses) {
+function getExpensesByCategories(parentCategories: ParentCategory, childCategories: ChildCategory, expenses: Expense[]): ExpensesByCategory {
   const parent = JSON.parse(JSON.stringify(parentCategories));
   const child = JSON.parse(JSON.stringify(childCategories));
+  // console.log('expenses', expenses);
   
   expenses.forEach(expense => {
     const isParentCategory = parent[expense.category];
@@ -60,15 +81,16 @@ function getExpensesByCategories(parentCategories, childCategories, expenses) {
       child[expense.category].value += expenseValue;
     }
   });
-
-  return {
-    parentCategory: sortObject(parent, 'parent'),
-    childCategories: sortObject(child, 'child')
-  };
+  // console.log('parent', parent);
+  // console.log('child', child);
+  
+  return sortObjects(parent, child);
 }
 
 const initialState:ExpensesDataState = {
   categories: [],
+  parentCategories: {},
+  childCategories: {},
   dayExpenses: {
     total: 0,
     expenses: []
@@ -83,15 +105,18 @@ const initialState:ExpensesDataState = {
   },
   dayExpensesByCategory: {
     parentCategory: {},
-    childCategories: {}
+    childCategories: {},
+    maxValue: 0,
   },
   weekExpensesByCategory: {
     parentCategory: {},
-    childCategories: {}
+    childCategories: {},
+    maxValue: 0,
   },
   monthExpensesByCategory: {
     parentCategory: {},
-    childCategories: {}
+    childCategories: {},
+    maxValue: 0,
   },
   isLoadingExpenses: true,
   isLoadingCategories: true,
@@ -113,34 +138,20 @@ export const expensesDataSlice = createSlice({
       const { expenses: monthExpenses } = action.payload.monthExpenses;
 
       const categoriesById: {[index:string]: Category} = {};
-      const parentCategories: {
-        [index:string]: Category & {     
-          value: number;
-          children?: [Category];
-        }
-      } = {};
-      const childCategories: {[index:string]: Category & {value: number}} = {};
-    
+      const parentCategories: ParentCategory = {};
+      const childCategories: ChildCategory = {};
+
       categories.forEach((category) => {
-        categoriesById[category._id] = {...category};
-    
-        if (!category.childOf && !parentCategories[category._id]) {
-    
-          parentCategories[category._id] = {...category, value: 0, children: []};
-    
-        } else if (!category.childOf && parentCategories[category._id]) {
-    
-          parentCategories[category._id] = {...category, ...parentCategories[category._id]};
-    
-        } else if (!parentCategories[category.childOf]) {
-    
-          parentCategories[category.childOf] = {value: 0, children: [category]};
+        categoriesById[category._id] = {...category};        
+        if (category.childOf) {
           childCategories[category._id] = {...category, value: 0};
         } else {
-          childCategories[category._id] = {...category, value: 0};
-          parentCategories[category.childOf].children?.push(category);
-    
-        }  
+          parentCategories[category._id] = {...category, value: 0, children: []};
+        }
+      });
+
+      Object.keys(childCategories).forEach((id) => {
+        parentCategories[childCategories[id].childOf].children.push(childCategories[id]);
       });
 
       const monthExpensesByCategory = getExpensesByCategories(parentCategories, childCategories, monthExpenses);
@@ -151,6 +162,8 @@ export const expensesDataSlice = createSlice({
       state.isLoadingExpenses = false;
       state.isLoadingCategories = false;
       state.categories = action.payload.categories;
+      state.parentCategories = parentCategories;
+      state.childCategories = childCategories;
       state.dayExpenses = action.payload.dayExpenses;
       state.weekExpenses = action.payload.weekExpenses;
       state.monthExpenses = action.payload.monthExpenses;

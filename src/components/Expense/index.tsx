@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
 import styles from './Expense.module.css';
-import { Category } from '../../types/interfaces';
+import { Category } from '../../data/types/interfaces';
 import { colors } from './ExpenseColors';
 
 interface ExpenseProps {
@@ -31,7 +31,6 @@ const Expense: React.FC<ExpenseProps> = ({
   const width = `${length}%`;
   const [isActive, setIsActive] = useState(false);
   const children: JSX.Element[] = [];
-  console.log('childCategories', childCategories);
   
   Object.keys(childCategories).forEach((_id, index) => {
     const child = childCategories[_id];

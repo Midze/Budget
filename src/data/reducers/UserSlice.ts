@@ -1,12 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from '../../types/interfaces';
+import { User } from './../types/interfaces';
 
 interface UserState {
-  user: {
-    login: string,
-    _id: string,
-    email: string,
-  },
+  user: User,
   isLoading: boolean;
   error: string;
 }
@@ -25,10 +21,10 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    loginUser(state, action: PayloadAction<User>) {
+    loginUser(state, action: PayloadAction<{ email: string; password: string; }>) {
       state.isLoading = true;
     },
-    loginUserSuccess(state, action: PayloadAction<User>) {
+    loginUserSuccess(state, action: PayloadAction<{user: User} & {token: string}>) {
       console.log('action.payload', action.payload);
       const { token, user } = action.payload;
       localStorage.setItem('token', token);

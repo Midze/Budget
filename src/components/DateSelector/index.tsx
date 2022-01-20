@@ -5,12 +5,10 @@ import styles from './DateSelector.module.css';
 import ArrowIcon from '../../Icons/ArrowIcon';
 import moment, { Moment } from 'moment';
 import './styles.css';
-import { useAppDispatch } from '../../hooks/redux';
-import { getExpensesData } from '../../store/reducers/ExpensesSlice';
 
 interface DateSelectorProps {
   className?: string;
-  changeDate: (date: moment.Moment) => Dispatch<SetStateAction<Moment>>;
+  changeDate: (date: Moment) => void;
 }
 
 const DateSelector: React.FC<DateSelectorProps> = ({className, changeDate}): JSX.Element => {
@@ -25,6 +23,10 @@ const DateSelector: React.FC<DateSelectorProps> = ({className, changeDate}): JSX
     changeDate(nextDate);
     setStartDate(nextDate.toDate());
   };
+  const onCHangeDate = (date: Date) => {
+    changeDate(moment(date));
+    setStartDate(date);
+  };
 
   return (
     <div className={cn(styles.datePickerContainer, className)}>
@@ -37,7 +39,7 @@ const DateSelector: React.FC<DateSelectorProps> = ({className, changeDate}): JSX
         calendarClassName={cn(styles.datePickerDatesWrapper)}
         selected={startDate}
         dateFormat="dd/MM/yyyy"
-        onChange={(date: Date) => changeDate(moment(date))}
+        onChange={onCHangeDate}
       />
       <ArrowIcon
         className={cn(styles.arrow, styles.arrowNext)}

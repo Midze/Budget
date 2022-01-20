@@ -1,16 +1,14 @@
 import React from 'react';
-import Select, { StylesConfig } from 'react-select';
+import Select, { StylesConfig, ActionMeta, SingleValue, MultiValue } from 'react-select';
 
+type Option = {
+  label: string;
+  value: string;
+};
 interface FormSelectProps {
   placeholder: string;
-  categories: {
-    value: string;
-    label: string;
-  }[];
-  selected: {
-    value: string,
-    label: string
-  }[];
+  categories: Option[];
+  selected: Option[];
   name: string;
   index: number;
   onChange: (index:number, value: string | number, name: string) => void;
@@ -19,7 +17,7 @@ interface FormSelectProps {
 
 
 
-const colorStyles: StylesConfig = {
+const colorStyles = (borderColor:string, index: number):StylesConfig<Option> => ({
   control: (styles, state) => ({
     ...styles,
     backgroundColor: 'transparent',
@@ -27,15 +25,16 @@ const colorStyles: StylesConfig = {
     borderLeft: 'none',
     borderRight: 'none',
     borderRadius: 0,
-    borderColor: state.selectProps.borderColor,
+    borderColor: borderColor,
   }),
   menu: (styles, state) => {    
     return {
       ...styles,
       backgroundColor: '#0B0C0D',
       position: 'absolute',
-      top: state.selectProps.index >= 5 ? 'unset' : '30px',
-      bottom: state.selectProps.index >= 5 ? '-5px' : 'unset',
+      top: index >= 5 ? 'unset' : '30px',
+      bottom: index >= 5 ? '-5px' : 'unset',
+      zIndex: 100,
     };
   },
   menuList: (styles) => {
@@ -75,7 +74,7 @@ const colorStyles: StylesConfig = {
     color: '#C7D0D9',
     textTransform: 'capitalize',
   }),
-};
+});
 
 const FormSelect: React.FC<FormSelectProps> = ({
   placeholder,
@@ -86,22 +85,26 @@ const FormSelect: React.FC<FormSelectProps> = ({
   onChange,
   error
 }) => {
-
-  const handleChange = (newValue: {value: string, label: string}) => {
-    onChange(index, name, newValue.value);
+  console.log('selected', selected);
+  
+  const handleChange = (option: Option | null ): void => {
+    if (option !== null){
+      console.log('change', option.value);
+      
+      onChange(index, option.value, name);
+    }
   };
   
   return (
     <Select
-      styles={colorStyles}
-      borderColor={error ? 'tomato' : '#C7D0D9'}
+      styles={colorStyles(error ? 'tomato' : '#C7D0D9', index)}
       options={categories}
       defaultValue={selected}
       placeholder={placeholder}
-      onChange={handleChange}
-      menuPosition='fixed'
-      index={index}
+      onChange={(option: Option | null) => handleChange(option)}
+      menuPosition='absolute'
       menuPlacement={'top'}
+      isMulti={false}
     />
   );
 };

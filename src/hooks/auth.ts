@@ -6,7 +6,14 @@ const checkAuth = () => {
   if (!isTokenExist) {
     return false;
   }
-  const decoded = jwt_decode(localStorage.token);
+  console.log();
+  
+  const decoded: {
+    email: string;
+    _id: string;
+    iat: number;
+    exp: number;
+  } = jwt_decode(localStorage.token);
   const isTokenExpired = decoded.exp < (Date.now() / 1000);
   if (isTokenExpired) {
     return false;

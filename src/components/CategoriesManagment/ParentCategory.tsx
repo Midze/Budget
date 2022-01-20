@@ -40,7 +40,7 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({name, id, childCategorie
   }, [childCategories]);
 
   return (
-    <div className={cn(styles.parent, {[styles.active]: isActive})} style={{'height': isActive ? height+'px' : '25px'}}>
+    <div className={cn(styles.parent, {[styles.active]: isActive})} style={{'maxHeight': isActive ? height+'px' : '25px'}}>
       <div className={cn(styles.parentName)} onClick={handleClick}>
         {name}
       </div>

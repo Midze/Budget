@@ -14,14 +14,13 @@ interface CategoriesManagmentProps {
 
 const CategoriesManagment: React.FC<CategoriesManagmentProps> = ({categories, isLoading}): JSX.Element => {
   const dispatch = useAppDispatch();
-  const { parentCategories, childCategories } = useAppSelector(state => state.expensesData);
+  const { parentCategories } = useAppSelector(state => state.expensesData);
   const { _id } = useAppSelector(state => state.users.user);
   const [inputValue, setInputValue] = useState('');
-  const parents: [Category] | [] = [];
-  const children: {[key:string]: [Category] | []} = {};
   const isDataLoaded = !!categories.length;
   const isFetching = isLoading;
 
+  
   const handleClick = () => {
     addCategory(null, inputValue);
   };

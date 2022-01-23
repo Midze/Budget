@@ -88,6 +88,31 @@ function getExpensesByCategories(parentCategories: ParentCategory, childCategori
   return sortObjects(parent, child);
 }
 
+const splitCategories = (categories: Category[]) => {
+  const categoriesById: {[index:string]: Category} = {};
+  const parentCategories: ParentCategory = {};
+  const childCategories: ChildCategory = {};
+
+  categories.forEach((category) => {
+    categoriesById[category._id] = {...category};        
+    if (category.childOf) {
+      childCategories[category._id] = {...category, value: 0};
+    } else {
+      parentCategories[category._id] = {...category, value: 0, children: []};
+    }
+  });
+
+  Object.keys(childCategories).forEach((id) => {
+    parentCategories[childCategories[id].childOf].children.push(childCategories[id]);
+  });
+
+  return {
+    categoriesById,
+    parentCategories,
+    childCategories
+  };
+};
+
 const initialState:ExpensesDataState = {
   categories: [],
   parentCategories: {},
@@ -137,28 +162,10 @@ export const expensesDataSlice = createSlice({
       const { expenses: dayExpenses } = action.payload.dayExpenses;
       const { expenses: weekExpenses } = action.payload.weekExpenses;
       const { expenses: monthExpenses } = action.payload.monthExpenses;
-
-      const categoriesById: {[index:string]: Category} = {};
-      const parentCategories: ParentCategory = {};
-      const childCategories: ChildCategory = {};
-
-      categories.forEach((category) => {
-        categoriesById[category._id] = {...category};        
-        if (category.childOf) {
-          childCategories[category._id] = {...category, value: 0};
-        } else {
-          parentCategories[category._id] = {...category, value: 0, children: []};
-        }
-      });
-
-      Object.keys(childCategories).forEach((id) => {
-        parentCategories[childCategories[id].childOf].children.push(childCategories[id]);
-      });
-
+      const { parentCategories, childCategories } = splitCategories(categories);
       const monthExpensesByCategory = getExpensesByCategories(parentCategories, childCategories, monthExpenses);
       const weekExpensesByCategory = getExpensesByCategories(parentCategories, childCategories, weekExpenses);
-      const dayExpensesByCategory = getExpensesByCategories(parentCategories, childCategories, dayExpenses);
-
+      const dayExpensesByCategory = getExpensesByCategories(parentCategories, childCategories, dayExpenses);      
 
       state.isLoadingExpenses = false;
       state.isLoadingCategories = false;
@@ -211,8 +218,11 @@ export const expensesDataSlice = createSlice({
     },
     createCategorySuccess(state, action: PayloadAction<Category>) {
       const updatedCategores = [...state.categories, action.payload];
+      const { parentCategories, childCategories } = splitCategories(updatedCategores);
       state.isLoadingCategories = false;
       state.categories = updatedCategores;
+      state.parentCategories = parentCategories;
+      state.childCategories = childCategories;
       state.error = '';
     },
     createCategoryFail(state, action: PayloadAction<GraphQLError>) {

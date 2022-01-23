@@ -42,17 +42,8 @@ height: 20px;
 .addRowButton,
 .removeRowButton {
     margin-left: auto;
-    cursor: pointer;
     display: flex;
     align-items: center;
-}
-
-.addRowButton:hover svg,
-.removeRowButton:hover svg,
-.addRowButton:hover svg path,
-.removeRowButton:hover svg path {
-    fill: #fff;
-    stroke: #fff;
 }
 
 .removeRowButton {

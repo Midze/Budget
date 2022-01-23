@@ -23,15 +23,20 @@ const Input: React.FC<InputProps> = ({
   const [value, setValue] = useState(price);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    
     if (e.target.value.match(/^\d{1,}(\.\d{0,4})?$/)) {
       setValue(e.target.value);
     } else if ( e.target.value === '') {
       setValue(e.target.value);
     }
   };
-  const leaveFocus = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    onChange(index, Number(e.target.value).toFixed(2), name);
+  const handleKeyDownEvent = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.code === 'Enter') {
+      e.preventDefault();
+      onChange(index, Number(value).toFixed(2), name);
+    }
+  };
+  const leaveFocus = (): void => {
+    onChange(index, Number(value).toFixed(2), name);
   };
   const onFocusHandler = (e: React.FocusEvent<HTMLInputElement, Element>) => {
     e.currentTarget.autocomplete = 'off';
@@ -47,6 +52,7 @@ const Input: React.FC<InputProps> = ({
       placeholder={placeholder}
       value={value}
       onChange={handleChange}
+      onKeyDown={handleKeyDownEvent}
       onBlur={leaveFocus}
       name={name}
       onFocus={onFocusHandler}

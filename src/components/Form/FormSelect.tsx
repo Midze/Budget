@@ -84,13 +84,9 @@ const FormSelect: React.FC<FormSelectProps> = ({
   index,
   onChange,
   error
-}) => {
-  console.log('selected', selected);
-  
+}) => {  
   const handleChange = (option: Option | null ): void => {
     if (option !== null){
-      console.log('change', option.value);
-      
       onChange(index, option.value, name);
     }
   };

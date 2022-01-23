@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { GraphQLError } from 'graphql';
 import {
   Category,
   CreateCategoryInput,
@@ -53,9 +54,9 @@ export const categoriesSlice = createSlice({
       state.categories = updatedCategores;
       state.error = '';
     },
-    createCategoryFail(state, action: PayloadAction<any>) {
+    createCategoryFail(state, action: PayloadAction<GraphQLError>) {
       state.isLoadingCategories = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
     },
   }
 });

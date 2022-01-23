@@ -4,15 +4,16 @@ import hash from 'hash-sum';
 
 import FormRow from './FormRow';
 import styles from './Form.module.css';
-import Plug from './../Plug';
-import PlusIcon from './../../Icons/PlusIcon';
-import { Expense } from '../../data/types/interfaces';
+import Plug from 'components/Plug';
+import PlusIcon from 'components/Icons/PlusIcon';
+import { Expense } from 'data/types/interfaces';
 
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { createExpenses, expensesDataSlice, updateExpenses } from '../../data/reducers/ExpensesSlice';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { createExpenses, updateExpenses } from 'data/reducers/ExpensesSlice';
 
 interface AddFormProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   className?: string;
+  userId: string;
   categories: {
     value: string,
     label: string,
@@ -28,7 +29,7 @@ interface AddFormProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>,
   isLoading: boolean;
 }
 
-const AddForm: React.FC<AddFormProps> = ({className, categories, currentDate, expenseId, isLoading}) => {
+const AddForm: React.FC<AddFormProps> = ({className, categories, currentDate, expenseId, isLoading, userId}) => {
   const dispatch = useAppDispatch();
   const { total: dayTotal, expenses, _id } = useAppSelector(state => state.expensesData.dayExpenses);
   
@@ -65,11 +66,6 @@ const AddForm: React.FC<AddFormProps> = ({className, categories, currentDate, ex
     setFormData([...expenses]);
   };
   const setFieldValue = (index: number, value: string | number, name: string,) => {
-    // const rowData = {...formData[index], [name]: value};
-    console.log('index', index);
-    console.log('name', name);
-    console.log('value', value);
-    
     const rowData = {...formData[index], [name]: name === 'price' ? Number(value).toFixed(2) : value};
   
     if(errors[index]) {
@@ -111,7 +107,7 @@ const AddForm: React.FC<AddFormProps> = ({className, categories, currentDate, ex
     if (!isErrors) {      
       dispatch(createExpenses({
         createExpensesInput: {
-          userId: '61c921a24cc44e4914b85065',
+          userId,
           ...currentDate,
           expenses: formData
         }

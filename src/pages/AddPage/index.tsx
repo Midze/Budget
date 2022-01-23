@@ -9,19 +9,9 @@ import AddForm from '../../components/Form';
 import Total from '../../components/Total';
 import CategoriesManagment from '../../components/CategoriesManagment';
 
-import { Category, Expense } from '../../data/types/interfaces';
-
 import styles from './AddPage.module.css';
 import moment from 'moment';
 import DateSelector from '../../components/DateSelector';
-
-// interface AddPageProps {
-//   categories: Category[];
-//   dayTotal: number;
-//   weekTotal: number;
-//   monthTotal: number;
-//   expenses: Expense[];
-// }
 
 const AddPage: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -57,6 +47,7 @@ const AddPage: React.FC = (): JSX.Element => {
           changeDate={setSelectedDate}
         />
         <AddForm
+          userId={userId}
           className={cn(styles.form)}
           categories={categoriesForSelect}
           expenses={expenses}

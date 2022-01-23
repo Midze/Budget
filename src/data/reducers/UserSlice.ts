@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { GraphQLError } from 'graphql';
 import { User } from './../types/interfaces';
 
 interface UserState {
@@ -32,9 +33,9 @@ export const userSlice = createSlice({
       state.user = {...user};
       state.error = '';
     },
-    loginUserFail(state, action: PayloadAction<string>) {
+    loginUserFail(state, action: PayloadAction<GraphQLError>) {
       state.isLoading = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
     },
     getUser(state, action: PayloadAction<{id: string}>) {
       state.isLoading = true;
@@ -45,9 +46,9 @@ export const userSlice = createSlice({
       state.user = action.payload;
       state.error = '';
     },
-    getUserFail(state, action: PayloadAction<string>) {
+    getUserFail(state, action: PayloadAction<GraphQLError>) {
       state.isLoading = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
     },
   }
 });

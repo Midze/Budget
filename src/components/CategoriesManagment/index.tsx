@@ -14,13 +14,20 @@ interface CategoriesManagmentProps {
 
 const CategoriesManagment: React.FC<CategoriesManagmentProps> = ({categories, isLoading}): JSX.Element => {
   const dispatch = useAppDispatch();
-  const { parentCategories, childCategories} = useAppSelector(state => state.expensesData);
+  const { parentCategories, childCategories } = useAppSelector(state => state.expensesData);
+  const { _id } = useAppSelector(state => state.users.user);
   const [inputValue, setInputValue] = useState('');
   const parents: [Category] | [] = [];
   const children: {[key:string]: [Category] | []} = {};
+  const isDataLoaded = !!categories.length;
+  const isFetching = isLoading;
+
+  const handleClick = () => {
+    addCategory(null, inputValue);
+  };
   const addCategory = (childOf: string | null = null, name: string) => {
     dispatch(createCategory({
-      userId: '61c921a24cc44e4914b85065',
+      userId: _id,
       name: name.toLocaleLowerCase(),
       childOf,
     }));
@@ -28,26 +35,6 @@ const CategoriesManagment: React.FC<CategoriesManagmentProps> = ({categories, is
     setInputValue('');
   };
 
-  const handleClick = () => {
-    addCategory(null, inputValue);
-  };
-  // console.log('categories', categories);
-  
-  // categories.forEach((item: Category) => {
-  //   if (item.childOf) {
-  //     if(!children[item.childOf]) {
-  //       children[item.childOf] = [item];
-  //     } else children[item.childOf].push(item);
-  //   } else {
-  //     if (!children[item._id]) {
-  //       children[item._id] = [];
-  //     }
-  //     parents.push(item);
-  //   }
-  // });
-  
-  const isDataLoaded = !!categories.length;
-  const isFetching = isLoading;
   return (
     <div className={cn(styles.categoryManagment)}>
       { !isDataLoaded && <Plug size='m' type='rect'/>}

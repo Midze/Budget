@@ -1,0 +1,8 @@
+.iconButton {
+  cursor: pointer;
+}
+
+.iconButton:hover svg {
+    fill: #fff;
+    stroke: #fff;
+}

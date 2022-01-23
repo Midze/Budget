@@ -3,7 +3,7 @@ import cn from 'classnames';
 import styles from './Form.module.css';
 import Input from './Input';
 import FormSelect from './FormSelect';
-import MinusIcon from '../../Icons/MinusIcon';
+import MinusIcon from '../Icons/MinusIcon';
 
 interface FormRowProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {

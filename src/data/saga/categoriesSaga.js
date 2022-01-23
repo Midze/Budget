@@ -22,7 +22,7 @@ export function* createCategorySaga({ payload }) {
   } catch (error) {
     console.log(error);
     return yield put(createCategoryFail({
-      error,
+      ...error,
     }));
   }
 }

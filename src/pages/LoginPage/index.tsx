@@ -48,10 +48,6 @@ const LoginPage: React.FC = () => {
     }
   }, []);
   
-  // const onFocusHandler = (e: React.FocusEvent<HTMLInputElement, Element>) => {
-  //   e.currentTarget.removeAttribute('readonly');
-  //   e.currentTarget.autocomplete = 'off';
-  // };
   return (
     <>
       {userId ? <Redirect to='/dashboard'/> :
@@ -64,9 +60,8 @@ const LoginPage: React.FC = () => {
                 placeholder='Email'
                 name='email'
                 value={formData.email}
-                // readOnly
                 onChange={handleInputChange}
-                // onFocus={onFocusHandler}
+                autoComplete='new-password'
               />
               <input
                 className='login-form__input'
@@ -74,9 +69,8 @@ const LoginPage: React.FC = () => {
                 placeholder='Password'
                 name='password'
                 value={formData.password}
-                // readOnly
                 onChange={handleInputChange}
-                // onFocus={onFocusHandler}
+                autoComplete='new-password'
               />
               <input className='login-form__button' type="submit" value="Login" />
             </form>

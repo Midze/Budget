@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { GraphQLError } from 'graphql';
 import {
   Category,
   ChildCategory,
@@ -172,10 +173,10 @@ export const expensesDataSlice = createSlice({
       state.monthExpensesByCategory = monthExpensesByCategory;
       state.error = '';
     },
-    getExpensesDataFail(state, action: PayloadAction<any>) {
+    getExpensesDataFail(state, action: PayloadAction<GraphQLError>) {
       state.isLoadingExpenses = false;
       state.isLoadingCategories = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
     },
     createExpenses(state, action: PayloadAction<CreateExpensesInput>) {
       state.isLoadingExpenses = true;
@@ -187,9 +188,9 @@ export const expensesDataSlice = createSlice({
       state.monthExpenses = action.payload.monthExpenses;
       state.error = '';
     },
-    createExpensesFail(state, action: PayloadAction<any>) {
+    createExpensesFail(state, action: PayloadAction<GraphQLError>) {
       state.isLoadingExpenses = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
     },
     updateExpenses(state, action: PayloadAction<UpdateExpensesInput>) {
       state.isLoadingExpenses = true;
@@ -201,9 +202,9 @@ export const expensesDataSlice = createSlice({
       state.monthExpenses = action.payload.monthExpenses;
       state.error = '';
     },
-    updateExpensesFail(state, action: PayloadAction<any>) {
+    updateExpensesFail(state, action: PayloadAction<GraphQLError>) {
       state.isLoadingExpenses = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
     },
     createCategory(state, action: PayloadAction<CreateCategoryInput>) {
       state.isLoadingCategories = true;
@@ -214,9 +215,9 @@ export const expensesDataSlice = createSlice({
       state.categories = updatedCategores;
       state.error = '';
     },
-    createCategoryFail(state, action: PayloadAction<any>) {
+    createCategoryFail(state, action: PayloadAction<GraphQLError>) {
       state.isLoadingCategories = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
     },
   }
 });

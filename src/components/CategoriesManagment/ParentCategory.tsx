@@ -27,20 +27,20 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({name, id, childCategorie
   const handleClick = () => {
     setIsActive(!isActive);
     if(container && container.current) {
-      setHeight(container?.current?.clientHeight + 27);
+      setHeight(container?.current?.clientHeight + 24);
     }
   };  
 
   useEffect(() => {
     if(isActive) {      
       if(container && container.current) {
-        setHeight(container?.current?.clientHeight + 27);
+        setHeight(container?.current?.clientHeight + 24);
       }
     }
   }, [childCategories]);
 
   return (
-    <div className={cn(styles.parent, {[styles.active]: isActive})} style={{'maxHeight': isActive ? `${childCategories.length ? (65 + 40 * childCategories.length) : 65}px` : '25px'}}>
+    <div className={cn(styles.parent, {[styles.active]: isActive})} style={{'height': isActive ? `${height}px` : '25px'}}>
       <div className={cn(styles.parentName)} onClick={handleClick}>
         {name}
       </div>

@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import cn from 'classnames';
 import styles from './DateSelector.module.css';
-import ArrowIcon from '../../Icons/ArrowIcon';
+import ArrowIcon from 'components/Icons/ArrowIcon';
 import moment, { Moment } from 'moment';
 import './styles.css';
 

@@ -30,7 +30,7 @@ export function* getExpensesDataSaga({payload}) {
   } catch (error) {
     console.log(error);
     return yield put(getExpensesDataFail({
-      error,
+      ...error,
     }));
   }
 }
@@ -52,7 +52,7 @@ export function* updateExpensesSaga({ payload }) {
   } catch (error) {
     console.log(error);
     return yield put(updateExpensesFail({
-      error,
+      ...error,
     }));
   }
 }
@@ -75,7 +75,7 @@ export function* createExpensesSaga({ payload }) {
   } catch (error) {
     console.log(error);
     return yield put(createExpensesFail({
-      error,
+      ...error,
     }));
   }
 }

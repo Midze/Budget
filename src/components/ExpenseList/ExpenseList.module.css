@@ -1,7 +1,11 @@
 .expenseList {
-    overflow-y: scroll;
+    overflow-y: auto;
     margin-right: -8px;
     grid-area: list;
+}
+
+.withScroll {
+    overflow-y: scroll;
 }
 
 .expenseList::-webkit-scrollbar {
@@ -19,4 +23,30 @@
     box-shadow: inset 0 0 16px #C7D0D9;
     -webkit-box-shadow: inset 0 0 16px #C7D0D9; 
     height: 20px;
-} 
+}
+
+.notice {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    color: #C7D0D9;
+    text-decoration: none;
+}
+
+.noticeContent {
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.addExpenseButton {
+    margin: 10px auto;
+}
+
+.addExpenseButton svg{
+    height: 50px;
+    width: 50px;
+}

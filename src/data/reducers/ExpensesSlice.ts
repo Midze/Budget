@@ -4,6 +4,7 @@ import {
   Category,
   ChildCategory,
   CreateCategoryInput,
+  DeleteCategoryInput,
   CreateExpensesInput,
   Expense,
   Expenses,
@@ -229,6 +230,22 @@ export const expensesDataSlice = createSlice({
       state.isLoadingCategories = false;
       state.error = action.payload.message;
     },
+    deleteCategory(state, action: PayloadAction<DeleteCategoryInput>) {
+      state.isLoadingCategories = true;
+    },
+    deleteCategorySuccess(state, action: PayloadAction<Category>) {
+      const updatedCategores = [...state.categories, action.payload];
+      const { parentCategories, childCategories } = splitCategories(updatedCategores);
+      state.isLoadingCategories = false;
+      state.categories = updatedCategores;
+      state.parentCategories = parentCategories;
+      state.childCategories = childCategories;
+      state.error = '';
+    },
+    deleteCategoryFail(state, action: PayloadAction<GraphQLError>) {
+      state.isLoadingCategories = false;
+      state.error = action.payload.message;
+    },
   }
 });
 
@@ -245,6 +262,9 @@ export const {
   createCategory,
   createCategorySuccess,
   createCategoryFail,
+  deleteCategory,
+  deleteCategorySuccess,
+  deleteCategoryFail,
 } = expensesDataSlice.actions;
 
 export default expensesDataSlice.reducer;

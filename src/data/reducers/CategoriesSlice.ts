@@ -3,6 +3,7 @@ import { GraphQLError } from 'graphql';
 import {
   Category,
   CreateCategoryInput,
+  DeleteCategoryInput,
   CreateExpensesInput,
   Expense,
   Expenses,

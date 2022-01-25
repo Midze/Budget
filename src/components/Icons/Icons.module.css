@@ -6,3 +6,7 @@
     fill: #fff;
     stroke: #fff;
 }
+
+.closeButton {
+  transform: rotate(45deg);
+}

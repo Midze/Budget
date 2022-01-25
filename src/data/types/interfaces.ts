@@ -11,6 +11,11 @@ export interface Category {
   userId: string;
 }
 
+export interface DeleteCategoryInput {
+  _id: string;
+  childOf?: string;
+}
+
 export interface CreateCategoryInput {
   userId: string;
   name: string;

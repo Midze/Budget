@@ -1,10 +1,11 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import cn from 'classnames';
 import styles from './DateSelector.module.css';
 import ArrowIcon from 'components/Icons/ArrowIcon';
 import moment, { Moment } from 'moment';
 import './styles.css';
+import { useAppSelector } from 'hooks/redux';
 
 interface DateSelectorProps {
   className?: string;
@@ -12,15 +13,20 @@ interface DateSelectorProps {
 }
 
 const DateSelector: React.FC<DateSelectorProps> = ({className, changeDate}): JSX.Element => {
+  const isLoadingExpenses = useAppSelector(state => state.expensesData.isLoadingExpenses);
   const [startDate, setStartDate] = useState(new Date());
   const prevDay = () => {
     const prevDay = moment(startDate).subtract(1, 'days');
-    changeDate(prevDay);
+    if (!isLoadingExpenses){// to-do use debounce
+      changeDate(prevDay);
+    }
     setStartDate(prevDay.toDate());
   };
   const nextDay = () => {
     const nextDate = moment(startDate).add(1, 'days');
-    changeDate(nextDate);
+    if (!isLoadingExpenses){// to-do use debounce
+      changeDate(nextDate);
+    }
     setStartDate(nextDate.toDate());
   };
   const onCHangeDate = (date: Date) => {

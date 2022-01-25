@@ -2,9 +2,9 @@ import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 import styles from './CategoriesManagment.module.css';
 import ChildCategory from './ChildCategory';
-import { Category } from '../../data/types/interfaces';
-import { useAppDispatch } from '../../hooks/redux';
-import Plug from '../Plug';
+import { Category, DeleteCategoryInput } from 'data/types/interfaces';
+import { useAppDispatch } from 'hooks/redux';
+import Plug from 'components/Plug';
 
 interface ParentCategoryProps {
   name: string;
@@ -13,16 +13,31 @@ interface ParentCategoryProps {
   isDefault: boolean;
   addCategory: (childOf:string, name: string) => void;
   isFetching: boolean;
+  setIsModalActive: (active: boolean) => void;
+  setCategoryForDelete: React.Dispatch<React.SetStateAction<DeleteCategoryInput>>
 }
 
-const ParentCategory: React.FC<ParentCategoryProps> = ({name, id, childCategories, isDefault, addCategory, isFetching}) => {
+const ParentCategory: React.FC<ParentCategoryProps> = ({
+  name,
+  id,
+  childCategories,
+  isDefault,
+  isFetching,
+  addCategory,
+  setIsModalActive,
+  setCategoryForDelete
+}) => {
   const [inputValue, setInputValue] = useState('');
   const [isActive, setIsActive] = useState(false);
   const [height, setHeight] = useState(0);
   const container = useRef<HTMLDivElement | null>(null);
-  const buttonHandler = () => {
+  const addButtonHandler = () => {
     addCategory(id, inputValue);
     setInputValue('');
+  };
+  const removeButtonHandler = () => {
+    setIsModalActive(true);
+    setCategoryForDelete({_id: id});
   };
   const handleClick = () => {
     setIsActive(!isActive);
@@ -44,12 +59,15 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({name, id, childCategorie
       <div className={cn(styles.parentName)} onClick={handleClick}>
         {name}
       </div>
-      <button className={cn(styles.button, {
-        [styles.hidden]: isDefault,
-      })}>Delete</button>
+      <button
+        className={cn(styles.button, {
+          [styles.hidden]: isDefault,
+        })}
+        onClick={removeButtonHandler}
+      >Delete</button>
       <div className={cn(styles.parentCategoryContent)} ref={container}>
         {!!childCategories.length &&
-          childCategories.map((child) => <ChildCategory key={child._id} name={child.name}/>)
+          childCategories.map((child) => <ChildCategory key={child._id} id={child._id} childOf={child.childOf} name={child.name} setIsModalActive={setIsModalActive} setCategoryForDelete={setCategoryForDelete}/>)
         }
         {!isFetching ? <div className={cn(styles.inputContainer)}>
           <input
@@ -59,7 +77,7 @@ const ParentCategory: React.FC<ParentCategoryProps> = ({name, id, childCategorie
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
-          {inputValue && <button className={cn(styles.button)} onClick={buttonHandler}>Add</button>}
+          {inputValue && <button className={cn(styles.button)} onClick={addButtonHandler}>Add</button>}
         </div> : <Plug size='s' type='rect' count={1}/>}
       </div>
     </div>

@@ -82,6 +82,38 @@
   margin-left: 16px;
 }
 
+
+
+.modalButton {
+  color: #D8D9DA;
+  box-sizing: border-box;
+  border-radius: 3px;
+  cursor: pointer;
+  height: 42px;
+  border: 1px solid #1F2226;
+  background-color: #1F2226;
+  transition: 0.2s;
+  width: 45%;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.modalButton:hover {
+  border: 1px solid #D8D9DA;
+  background-color: unset;
+}
+
+.modal {  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.modalTitle {
+  width: 100%;
+}
+
 .child {
   width: 100%;
   margin-bottom: 16px;

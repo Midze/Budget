@@ -1,11 +1,13 @@
 import {
   ApolloClient,
+  createHttpLink,
   gql,
   NormalizedCacheObject,
   InMemoryCache,
   ApolloQueryResult,
   DocumentNode,
 } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
 const defaultOptions = {
   query: {
@@ -17,11 +19,25 @@ const defaultOptions = {
   },
 };
 
+const httpLink = createHttpLink({
+  uri: 'http://18.224.135.209:3000/graphql',
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    }
+  };
+});
+
 const apolloClient = new ApolloClient({
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache({
     addTypename: false,
   }),
-  uri: 'http://18.224.135.209:3000/graphql',
   defaultOptions,
 });
 

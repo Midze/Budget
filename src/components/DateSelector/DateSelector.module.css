@@ -40,6 +40,7 @@
 .arrow:hover svg {
   transition: 0.2s;
   fill: #fff;
+  stroke: none;
 }
 
 .arrowNext {

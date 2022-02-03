@@ -20,7 +20,7 @@ const defaultOptions = {
 };
 
 const httpLink = createHttpLink({
-  uri: 'http://18.224.135.209:3000/graphql',
+  uri: 'http://95.217.18.50:3000/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {

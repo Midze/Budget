@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import cn from 'classnames';
 import styles from './CategoriesManagment.module.css';
-import { DeleteCategoryInput } from 'data/types/interfaces';
+// import { DeleteCategoryInput } from 'data/types/interfaces';
 
 interface ChildCategoryProps {
   name: string;
@@ -9,7 +9,7 @@ interface ChildCategoryProps {
   id: string;
   childOf: string;
   setIsModalActive: (active: boolean) => void;
-  setCategoryForDelete: React.Dispatch<React.SetStateAction<DeleteCategoryInput>>
+  setCategoryForDelete: React.Dispatch<React.SetStateAction<{_id: string; childOf?: string}>>
 }
 
 const ChildCategory: React.FC<ChildCategoryProps> = ({ name, id, childOf, setIsModalActive, setCategoryForDelete }) => {

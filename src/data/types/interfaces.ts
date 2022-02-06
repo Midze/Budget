@@ -11,11 +11,6 @@ export interface Category {
   userId: string;
 }
 
-export interface DeleteCategoryInput {
-  _id: string;
-  childOf?: string;
-}
-
 export interface CreateCategoryInput {
   userId: string;
   name: string;
@@ -67,6 +62,12 @@ export interface GetExpensesInput {
   month: number;
   week: number;
   day: number;
+}
+
+export interface DeleteExpensesCategoryInput extends GetExpensesInput {
+  ids: [string];
+  userId: string;
+  childOf?: string;
 }
 
 export interface UpdateExpensesInput {

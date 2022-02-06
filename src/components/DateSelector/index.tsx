@@ -17,16 +17,12 @@ const DateSelector: React.FC<DateSelectorProps> = ({className, changeDate}): JSX
   const [startDate, setStartDate] = useState(new Date());
   const prevDay = () => {
     const prevDay = moment(startDate).subtract(1, 'days');
-    if (!isLoadingExpenses){// to-do use debounce
-      changeDate(prevDay);
-    }
+    changeDate(prevDay);// to-do use debounce
     setStartDate(prevDay.toDate());
   };
   const nextDay = () => {
     const nextDate = moment(startDate).add(1, 'days');
-    if (!isLoadingExpenses){// to-do use debounce
-      changeDate(nextDate);
-    }
+    changeDate(nextDate);// to-do use debounce
     setStartDate(nextDate.toDate());
   };
   const onCHangeDate = (date: Date) => {
@@ -37,7 +33,9 @@ const DateSelector: React.FC<DateSelectorProps> = ({className, changeDate}): JSX
   return (
     <div className={cn(styles.datePickerContainer, className)}>
       <ArrowIcon
-        className={cn(styles.arrow, styles.arrowPrev)}
+        className={cn(styles.arrow, styles.arrowPrev, {
+          [styles.disabled]: isLoadingExpenses
+        })}
         onClick={prevDay}
       />
       <DatePicker
@@ -48,7 +46,9 @@ const DateSelector: React.FC<DateSelectorProps> = ({className, changeDate}): JSX
         onChange={onCHangeDate}
       />
       <ArrowIcon
-        className={cn(styles.arrow, styles.arrowNext)}
+        className={cn(styles.arrow, styles.arrowNext, {
+          [styles.disabled]: isLoadingExpenses
+        })}
         onClick={nextDay}
       />  
     </div>

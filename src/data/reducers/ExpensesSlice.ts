@@ -4,7 +4,7 @@ import {
   Category,
   ChildCategory,
   CreateCategoryInput,
-  DeleteCategoryInput,
+  DeleteExpensesCategoryInput,
   CreateExpensesInput,
   Expense,
   Expenses,
@@ -167,7 +167,7 @@ export const expensesDataSlice = createSlice({
       const monthExpensesByCategory = getExpensesByCategories(parentCategories, childCategories, monthExpenses);
       const weekExpensesByCategory = getExpensesByCategories(parentCategories, childCategories, weekExpenses);
       const dayExpensesByCategory = getExpensesByCategories(parentCategories, childCategories, dayExpenses);      
-
+      
       state.isLoadingExpenses = false;
       state.isLoadingCategories = false;
       state.categories = action.payload.categories;
@@ -230,20 +230,23 @@ export const expensesDataSlice = createSlice({
       state.isLoadingCategories = false;
       state.error = action.payload.message;
     },
-    deleteCategory(state, action: PayloadAction<DeleteCategoryInput>) {
+    deleteExpensesCategory(state, action: PayloadAction<DeleteExpensesCategoryInput>) {
       state.isLoadingCategories = true;
+      state.isLoadingExpenses = true;
     },
-    deleteCategorySuccess(state, action: PayloadAction<Category>) {
+    deleteExpensesCategorySuccess(state, action: PayloadAction<Category>) {
       const updatedCategores = [...state.categories, action.payload];
       const { parentCategories, childCategories } = splitCategories(updatedCategores);
       state.isLoadingCategories = false;
+      state.isLoadingExpenses = false;
       state.categories = updatedCategores;
       state.parentCategories = parentCategories;
       state.childCategories = childCategories;
       state.error = '';
     },
-    deleteCategoryFail(state, action: PayloadAction<GraphQLError>) {
+    deleteExpensesCategoryFail(state, action: PayloadAction<GraphQLError>) {
       state.isLoadingCategories = false;
+      state.isLoadingExpenses = false;
       state.error = action.payload.message;
     },
   }
@@ -262,9 +265,9 @@ export const {
   createCategory,
   createCategorySuccess,
   createCategoryFail,
-  deleteCategory,
-  deleteCategorySuccess,
-  deleteCategoryFail,
+  deleteExpensesCategory,
+  deleteExpensesCategorySuccess,
+  deleteExpensesCategoryFail,
 } = expensesDataSlice.actions;
 
 export default expensesDataSlice.reducer;

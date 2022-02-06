@@ -70,5 +70,39 @@ export const mutations = {
       }
     }
   }`,
-  
+  deleteExpensesCategory: gql `mutation removeExpensesCategory(
+    $fields: RemoveExpensesCategoryInput!
+  ) {
+    removeExpensesCategory(
+      removeExpensesCategoryInput: $fields
+    ) {
+      categories {
+        _id
+        childOf
+        name
+        userId
+      }
+      day {
+        total
+        expenses {
+          category
+          price
+        }
+      }
+      week {
+        total
+        expenses {
+          category
+          price
+        }
+      }
+      month {
+        total
+        expenses {
+          category
+          price
+        }
+      }
+    }
+  }`,
 };

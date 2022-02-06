@@ -3,7 +3,10 @@ import { executeMutation } from '../apolloClient';
 import { mutations } from './../mutations';
 import {
   createCategorySuccess,
-  createCategoryFail
+  createCategoryFail,
+  deleteExpensesCategorySuccess,
+  getExpensesDataSuccess,
+  deleteExpensesCategoryFail,
 } from '../reducers/ExpensesSlice';
 
 export function* createCategorySaga({ payload }) {
@@ -22,6 +25,33 @@ export function* createCategorySaga({ payload }) {
   } catch (error) {
     console.log(error);
     return yield put(createCategoryFail({
+      ...error,
+    }));
+  }
+}
+
+export function* deleteExpensesCategorySaga({ payload }) {
+  try {
+    const mutation = mutations.deleteExpensesCategory;
+    const options = {
+      mutation,
+      variables: {
+        fields: payload
+      },
+    };
+
+    const { removeExpensesCategory } = yield call(executeMutation, options);
+    console.log('removeExpensesCategory', removeExpensesCategory);
+    const { categories, day, week, month } = removeExpensesCategory;
+    return yield put(getExpensesDataSuccess({
+      categories,
+      dayExpenses: day,
+      weekExpenses: week,
+      monthExpenses: month,
+    }));
+  } catch (error) {
+    console.log(error);
+    return yield put(deleteExpensesCategoryFail({
       ...error,
     }));
   }

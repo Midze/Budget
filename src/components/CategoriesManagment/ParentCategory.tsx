@@ -2,7 +2,7 @@ import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 import styles from './CategoriesManagment.module.css';
 import ChildCategory from './ChildCategory';
-import { Category, DeleteCategoryInput } from 'data/types/interfaces';
+import { Category, DeleteExpensesCategoryInput } from 'data/types/interfaces';
 import { useAppDispatch } from 'hooks/redux';
 import Plug from 'components/Plug';
 
@@ -14,7 +14,7 @@ interface ParentCategoryProps {
   addCategory: (childOf:string, name: string) => void;
   isFetching: boolean;
   setIsModalActive: (active: boolean) => void;
-  setCategoryForDelete: React.Dispatch<React.SetStateAction<DeleteCategoryInput>>
+  setCategoryForDelete: React.Dispatch<React.SetStateAction<{_id: string}>>
 }
 
 const ParentCategory: React.FC<ParentCategoryProps> = ({

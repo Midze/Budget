@@ -65,6 +65,8 @@ const AddPage: React.FC = (): JSX.Element => {
       <Card className={cn(styles.catigories)} type="categories" title={'Categories managment'}>
         <CategoriesManagment
           categories={categories}
+          userId={userId}
+          currentDate={splittedSelectedDate}
           isLoading={isLoadingCategories}
         />
       </Card>

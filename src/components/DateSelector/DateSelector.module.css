@@ -46,3 +46,7 @@
 .arrowNext {
   transform: rotate(180deg);
 }
+
+.disabled {
+  pointer-events: none;
+}

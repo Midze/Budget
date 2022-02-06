@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
-import { createCategory, deleteCategory } from 'data/reducers/ExpensesSlice';
-import { Category, DeleteCategoryInput } from 'data/types/interfaces';
+import { createCategory, deleteExpensesCategory } from 'data/reducers/ExpensesSlice';
+import { Category, DeleteExpensesCategoryInput } from 'data/types/interfaces';
 import Plug from 'components/Plug';
 import Modal from 'components/Modal';
 import ParentCategory from './ParentCategory';
@@ -11,16 +11,23 @@ import styles from './CategoriesManagment.module.css';
 
 interface CategoriesManagmentProps {
   categories: Category[];
+  userId: string;
+  currentDate: {
+    day: number;
+    week: number;
+    month: number;
+    year: number;
+  };
   isLoading: boolean;
 }
 
-const CategoriesManagment: React.FC<CategoriesManagmentProps> = ({categories, isLoading}): JSX.Element => {
+const CategoriesManagment: React.FC<CategoriesManagmentProps> = ({categories, userId, currentDate, isLoading}): JSX.Element => {
   const dispatch = useAppDispatch();
   const { parentCategories } = useAppSelector(state => state.expensesData);
   const { _id } = useAppSelector(state => state.users.user);
   const [inputValue, setInputValue] = useState('');
   const [isModalActive, setIsModalActive] = useState(false);
-  const [categoryForDelete, setCategoryForDelete] = useState<DeleteCategoryInput>({_id: ''});
+  const [categoryForDelete, setCategoryForDelete] = useState<{_id: string, childOf?: string}>({_id: ''});
   
   const isDataLoaded = !!categories.length;
   const isFetching = isLoading;
@@ -30,16 +37,20 @@ const CategoriesManagment: React.FC<CategoriesManagmentProps> = ({categories, is
     addCategory(null, inputValue);
   };
   
-  const handleModalNButtonNo = () => {
+  const handleModaleButtonNo = () => {
     setIsModalActive(false);
   };
 
-  const handleModalNButtonYes = () => {
-    console.log('categoryForDelete', categoryForDelete);
+  const handleModaleButtonYes = () => {
     
-    // dispatch(deleteCategory({
-    //   ...categoryForDelete
-    // }));
+    dispatch(deleteExpensesCategory({
+      ids: [categoryForDelete._id],
+      ...currentDate,
+      userId,
+    }));
+
+    setIsModalActive(false);
+
   };
 
   const addCategory = (childOf: string | null = null, name: string) => {
@@ -84,8 +95,8 @@ const CategoriesManagment: React.FC<CategoriesManagmentProps> = ({categories, is
         <div className={cn(styles.modal)}>
           <h4 className={cn(styles.modalTitle)}>Are you sure you want to delete this category?</h4>
           <p>All expenses from this category will be moved to the {categoryForDelete.childOf ? 'parent' : 'uncategorized'} category</p>
-          <button className={cn(styles.modalButton)} onClick={handleModalNButtonYes}>Yes</button>
-          <button className={cn(styles.modalButton)} onClick={handleModalNButtonNo}>No</button>
+          <button className={cn(styles.modalButton)} onClick={handleModaleButtonYes}>Yes</button>
+          <button className={cn(styles.modalButton)} onClick={handleModaleButtonNo}>No</button>
         </div>  
       </Modal>}
     </div>

@@ -1,6 +1,6 @@
 # Budget Web App
 
-The application was built for the [Finance accounting application](http://18.224.135.209:5000/).
+The application was built for the [Finance accounting application](http://95.217.18.50:5000/).
 
 Automatic deployment of the project occurs when pushing to the master branch implemented with:
 - Docker

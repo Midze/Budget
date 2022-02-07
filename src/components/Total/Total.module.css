@@ -22,7 +22,7 @@
 
 .circle_l {
     font-size: 42px;
-    border: 5px solid #C7D0D9;
+    border: 5px solid var(--primary-color);
     height: 100%;
     width: 15vw;
 }
@@ -33,7 +33,7 @@
     max-width: 203px;
     width: 13vw;
     font-size: 24px;
-    border: 2px solid #C7D0D9;
+    border: 2px solid var(--primary-color);
 }
 
 .value {
@@ -72,7 +72,7 @@
 @media (max-width: 1300px) {
     .circle_l {
         font-size: 28px;
-        border: 2px solid #C7D0D9;
+        border: 2px solid var(--primary-color);
     }
     .circle_m {
         width: 200px;

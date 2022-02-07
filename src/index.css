@@ -348,24 +348,39 @@ template {
   display: none;
 }
 
+:root {
+  --primary-color: #C7D0D9;
+  --primary-font-size: 16px;
+  --title-font-size: 18px;
+  --primary-background: rgb(11, 12, 13);
+  --secondary-background: #141619;
+  --primary-border: 1px solid #202226;
+}
+
 html {
   font-size: 16px;
 }
 
 body {
-  color: #C7D0D9;
+  color: var(--primary-color);
   font-family: 'Roboto', sans-serif;
-  font-size: 16px;
+  font-size: var(--main-font-size);
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   width: 100vw;
   height: 100vh;
-  background-color: #0B0C0D;
+  background-color: var(--primary-background);
 }
 
 input,
 button {
   -webkit-appearance: none;
   border-radius: 0;
+}
+
+@media (max-width:1300px) {
+  :root {
+    --title-font-size: 16px;
+  }
 }

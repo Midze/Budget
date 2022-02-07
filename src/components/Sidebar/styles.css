@@ -4,7 +4,7 @@
     top: 0;
     bottom: 0;
     left: 0;
-    background: #141619;
+    background:  var(--secondary-background);
     box-shadow: 0px 0px 20px #000000;
     padding: 16px;
     box-sizing: border-box;
@@ -34,7 +34,7 @@
 .account-link {
     width: 32px;
     height: 32px;
-    background-color: #C4C4C4;
+    background-color: var(--primary-color);
     border-radius: 50%;
     color:#000000;
     display: flex;
@@ -88,7 +88,7 @@
 .burger .line {
     width: 25px;
     height: 2px;
-    background-color: #C7D0D9;
+    background-color: var(--primary-color);
     transition: all 0.3s;
     transform-origin: left;
 }

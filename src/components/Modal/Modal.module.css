@@ -13,8 +13,8 @@
   min-width: 300px;
   max-width: 400px;
   width: 100vw;
-  background: #141619;
-  border: 1px solid #202226;
+  background:  var(--secondary-background);
+  border:  var(--primary-border);
   box-sizing: border-box;
   border-radius: 3px;
   padding: 16px;

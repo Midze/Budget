@@ -9,4 +9,5 @@ export const colors: {[key: string]: string} = {
   'clothes': '#333399',
   'utilities': '#AA41CA',
   'alcohol': '#1513af',
+  'uncategorized': '#5c5c5c'
 };

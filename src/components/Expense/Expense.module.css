@@ -3,8 +3,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #C7D0D9;
-    font-size: 16px;
+    color: var(--primary-color);
+    font-size: var(--primary-font-size);
     height: 30px;
     margin-bottom: 8px;
     width: 100%;
@@ -53,15 +53,15 @@
     text-transform: capitalize;
     flex: 1;
     text-shadow: 0.5px 0.5px 2px black;
+    line-height: 16px;
 }
 
 .value {
     z-index: 1;
     padding-right: 8px;
     width: auto;
+    line-height: 16px;
 }
-
-
 
 .children {
     width: 100%;

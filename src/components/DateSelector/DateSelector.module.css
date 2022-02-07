@@ -10,9 +10,9 @@
   background-color: transparent;
   border: none;
   font-weight: 500;
-  font-size: 18px;
+  font-size: var(--title-font-size);
   line-height: 24px;
-  color: #C7D0D9;
+  color: var(--primary-color);
   margin-left: 10px;
   margin-right: 10px;
   width: 100px;
@@ -20,8 +20,8 @@
 }
 
 .datePickerDatesWrapper {
-  background: #141619;
-  border: 1px solid #202226;
+  background:  var(--secondary-background);
+  border:  var(--primary-border);
   box-sizing: border-box;
   border-radius: 3px;
   padding: 16px;

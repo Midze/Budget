@@ -1,21 +1,46 @@
 .header {
-    background-color: #0B0C0D;
+    background-color:  var(--primary-background);
     padding: 16px 16px 16px 96px;
     height: 66px;
     font-weight: 500;
-    font-size: 18px;
+    font-size: var(--title-font-size);
     line-height: 21px;
-    color: #C7D0D9;
+    color: var(--primary-color);
     box-sizing: border-box;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+}
+
+.logout {
+    align-self: center;
+    position: relative;
+}
+
+.logout svg {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.logout:hover::after  {
+    content: 'logout';
+    font-size: 10px;
+    line-height: 12px;
+    color: var(--primary-color);
+    border: 1px solid silver;
+    background-color: #000;
+    padding: 2px;
+    position: absolute;
+    top: 5px;
+    left: -36px;
+
 }
 
 @media (max-width: 1300px) {
     .header {
         padding: 8px 8px 8px 61px;
-        height: 50px;     
-        font-size: 16px;
+        height: 50px;
         line-height: 19px;  
     }
 }

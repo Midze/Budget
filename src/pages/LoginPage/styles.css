@@ -19,13 +19,13 @@
 .login-form__input {
   background-color: unset;
   border: none;
-  border-bottom: 1px solid #C7D0D9;
-  color: #C7D0D9;
+  border-bottom: 1px solid var(--primary-color);
+  color: var(--primary-color);
   box-sizing: border-box;
   height: 24px;
   width: 100%;
   margin-bottom: 16px;
-  font-size: 16px;
+  font-size: var(--primary-font-size);
 }
 
 .login-form__button {
@@ -39,7 +39,7 @@
   transition: 0.2s;
   width: 100%;
   font-weight: 500;
-  font-size: 16px;
+  font-size: var(--primary-font-size);
 }
 
 .login-form__button:hover {

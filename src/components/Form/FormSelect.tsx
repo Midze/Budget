@@ -30,7 +30,7 @@ const colorStyles = (borderColor:string, index: number):StylesConfig<Option> => 
   menu: (styles, state) => {    
     return {
       ...styles,
-      backgroundColor: '#0B0C0D',
+      backgroundColor: ' var(--primary-background)',
       position: 'absolute',
       top: index >= 5 ? 'unset' : '30px',
       bottom: index >= 5 ? '-5px' : 'unset',
@@ -58,7 +58,7 @@ const colorStyles = (borderColor:string, index: number):StylesConfig<Option> => 
   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
     return {
       ...styles,
-      backgroundColor: '#0B0C0D',
+      backgroundColor: ' var(--primary-background)',
       textTransform: 'capitalize',
     };
   },

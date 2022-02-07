@@ -1,6 +1,6 @@
 .card {
-    background: #141619;
-    border: 1px solid #202226;
+    background:  var(--secondary-background);
+    border:  var(--primary-border);
     box-sizing: border-box;
     border-radius: 3px;
     padding: 16px;
@@ -8,9 +8,9 @@
 
 .title {
     font-weight: 500;
-    font-size: 18px;
+    font-size: var(--title-font-size);
     line-height: 21px;
-    color: #C7D0D9;
+    color: var(--primary-color);
     grid-area: title;
 }
 
@@ -77,7 +77,6 @@
     }
 
     .title {
-        font-size: 16px;
         line-height: 19px;
     }
 }

@@ -30,7 +30,9 @@ const Input: React.FC<InputProps> = ({
     }
   };
   const handleKeyDownEvent = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.code === 'Enter') {
+    console.log(e.code);
+    
+    if (e.code === 'Enter' || e.code === 'NumpadEnter') {
       e.preventDefault();
       onChange(index, Number(value).toFixed(2), name);
     }

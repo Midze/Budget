@@ -27,7 +27,7 @@ const Expense: React.FC<ExpenseProps> = ({
   childCategories,
 }): JSX.Element => { 
   const length = value / (maxValue / 100);  
-  const background = `linear-gradient(90deg, ${colors[name]} 0%, rgba(93, 129, 83, 0) 100%)`;
+  const background = `linear-gradient(90deg, ${colors[name] ? colors[name] : '#3c485c'} 0%, rgba(93, 129, 83, 0) 100%)`;
   const width = `${length}%`;
   const [isActive, setIsActive] = useState(false);
   const children: JSX.Element[] = [];

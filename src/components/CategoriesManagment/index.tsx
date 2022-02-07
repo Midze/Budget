@@ -23,7 +23,7 @@ interface CategoriesManagmentProps {
 
 const CategoriesManagment: React.FC<CategoriesManagmentProps> = ({categories, userId, currentDate, isLoading}): JSX.Element => {
   const dispatch = useAppDispatch();
-  const { parentCategories } = useAppSelector(state => state.expensesData);
+  const { parentCategories, childCategories } = useAppSelector(state => state.expensesData);
   const { _id } = useAppSelector(state => state.users.user);
   const [inputValue, setInputValue] = useState('');
   const [isModalActive, setIsModalActive] = useState(false);
@@ -42,9 +42,20 @@ const CategoriesManagment: React.FC<CategoriesManagmentProps> = ({categories, us
   };
 
   const handleModaleButtonYes = () => {
+    const categoryId = categoryForDelete._id;
+    const isParent = !categoryForDelete.childOf;
+    const ids = [categoryForDelete._id];
+
+    if (isParent) {
+      Object.keys(childCategories).forEach((id) => {
+        if (childCategories[id].childOf === categoryId) {
+          ids.push(id);
+        }
+      });
+    }
     
     dispatch(deleteExpensesCategory({
-      ids: [categoryForDelete._id],
+      ids,
       ...currentDate,
       userId,
     }));

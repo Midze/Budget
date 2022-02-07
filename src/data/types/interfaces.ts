@@ -65,7 +65,7 @@ export interface GetExpensesInput {
 }
 
 export interface DeleteExpensesCategoryInput extends GetExpensesInput {
-  ids: [string];
+  ids: string[];
   userId: string;
   childOf?: string;
 }

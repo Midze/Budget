@@ -13,7 +13,6 @@ import './styles.css';
 
 const Dashboard = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  const categories = useAppSelector(state => state.expensesData.categories);
   const userId = useAppSelector(state => state.users.user._id);
   const dayExpensesByCategory = useAppSelector(state => state.expensesData.dayExpensesByCategory);
   const weekExpensesByCategory = useAppSelector(state => state.expensesData.weekExpensesByCategory);

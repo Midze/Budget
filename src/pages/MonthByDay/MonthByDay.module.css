@@ -1,0 +1,68 @@
+.monthByDay {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.week {
+  display: grid;
+  grid-gap: 8px;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-areas: 
+  'sunday monday tuesday wednesday thursday friday saturday'
+  ;
+  height: 100%;
+  margin-bottom: 8px;
+}
+
+.week:nth-last-child(1) {
+  margin-bottom: 0;
+}
+
+.weekHeader {
+  height: 30px;
+  text-align: center;
+}
+
+.monday {
+  grid-area: monday;
+}
+.tuesday {
+  grid-area: tuesday;
+}
+.wednesday {
+  grid-area: wednesday;
+}
+.thursday {
+  grid-area: thursday;
+}
+.friday {
+  grid-area: friday;
+}
+.saturday {
+  grid-area: saturday;
+}
+.sunday {
+  grid-area: sunday;
+}
+
+.weekDay {
+  background: var(--secondary-background);
+  border: var(--primary-border);
+  box-sizing: border-box;
+  border-radius: 3px;
+  padding: 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.weekDay:hover {
+  border-color: var(--primary-color);
+}
+
+.disabled {
+ opacity: 0.5;
+ pointer-events: none;
+}

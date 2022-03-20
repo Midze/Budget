@@ -1,0 +1,27 @@
+.dashbord {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 8px;
+    height: 100%;
+    max-height: calc(100vh - 82px)
+}
+
+@media (max-width: 1300px) {
+    .dashbord {
+        max-height: calc(100vh - 58px)
+    }
+}
+
+@media (max-width: 1023px) {
+    .dashbord {
+        grid-template-columns: repeat(3, calc((100vw - 66px) / 2));
+        overflow-x: scroll;
+    }
+}
+
+@media (max-width: 767px) {
+    .dashbord {
+        grid-template-columns: repeat(3, calc(100vw - 16px));
+    }
+}

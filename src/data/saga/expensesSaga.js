@@ -9,6 +9,10 @@ import {
   updateExpensesFail,
   createExpensesSuccess,
   createExpensesFail,
+  getExpensesByMonthDataSuccess,
+  getExpensesByMonthDataFail,  
+  getMonthByDayExpensesSuccess,
+  getMonthByDayExpensesFail
 } from '../reducers/ExpensesSlice';
 
 export function* getExpensesDataSaga({payload}) {
@@ -75,6 +79,50 @@ export function* createExpensesSaga({ payload }) {
   } catch (error) {
     console.log(error);
     return yield put(createExpensesFail({
+      ...error,
+    }));
+  }
+}
+
+export function* getExpensesByMonthDataSaga({payload}) {
+  try {
+    const query = queries.getByMonthExpenses;
+    const options = {
+      query,
+      variables: payload,
+    };
+
+    const { getByMonthExpenses } = yield call(executeQuery, options);
+    const { categories, expensesByMonth } = getByMonthExpenses;
+    return yield put(getExpensesByMonthDataSuccess({
+      categories,
+      expensesByMonth
+    }));
+  } catch (error) {
+    console.log(error);
+    return yield put(getExpensesByMonthDataFail({
+      ...error,
+    }));
+  }
+}
+
+export function* getMonthByDayExpensesSaga({payload}) {
+  try {
+    const query = queries.getMonthExpensesByDay;
+    const options = {
+      query,
+      variables: payload,
+    };
+
+    const { getMonthExpensesByDay } = yield call(executeQuery, options);
+    const { byDayExpenses } = getMonthExpensesByDay;
+
+    return yield put(getMonthByDayExpensesSuccess({
+      byDayExpenses
+    }));
+  } catch (error) {
+    console.log(error);
+    return yield put(getMonthByDayExpensesFail({
       ...error,
     }));
   }

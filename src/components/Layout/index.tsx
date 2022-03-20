@@ -1,3 +1,5 @@
+import ByMonth from 'pages/ByMonth';
+import MonthByDay from 'pages/MonthByDay';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux';
@@ -22,10 +24,10 @@ const Layout = (): JSX.Element => {
             <AddPage/>
           </ProtectedRout>
           <ProtectedRout path="/day">
-              day
+            <MonthByDay/>
           </ProtectedRout>
           <ProtectedRout path="/month">
-              month
+            <ByMonth/>
           </ProtectedRout>
           <ProtectedRout path="/year">
               year

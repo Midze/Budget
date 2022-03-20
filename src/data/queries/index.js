@@ -52,5 +52,50 @@ export const queries = {
       login
     }
   }`,
-  
+  getByMonthExpenses: gql`query getByMonthExpenses(
+    $userId: String!
+    $year: Float!
+    $months: [Float!]!
+  ) {
+    getByMonthExpenses (
+      userId: $userId
+      year: $year
+      months: $months
+    ) {
+      categories {
+        _id
+        name
+        childOf
+        userId
+      }
+      expensesByMonth {
+        total
+        year
+        month
+        expenses {
+          price
+          category
+        }
+      }
+    }
+  }  
+  `,
+  getMonthExpensesByDay: gql`query getMonthExpensesByDay(
+    $userId: String!
+    $year: Float!
+    $month: Float!
+  ) {
+    getMonthExpensesByDay (
+      userId: $userId
+      year: $year
+      month: $month
+    ) {
+      byDayExpenses {
+        total
+        day
+        month
+      }
+    }
+  }
+  `  
 };

@@ -13,6 +13,12 @@ import {
   GetExpensesInput,
   ParentCategory,
   UpdateExpensesInput,
+  ExpensesByMonthData,
+  GetExpensesByMonthInput,
+  MonthlyExpensesByCategory,
+  MonthExpensesByDay,
+  ByDayExpense,
+  GetMonthExpensesByDayInput,
 } from './../types/interfaces';
 
 interface ExpensesDataState {
@@ -25,6 +31,10 @@ interface ExpensesDataState {
   dayExpensesByCategory: ExpensesByCategory,
   weekExpensesByCategory: ExpensesByCategory,
   monthExpensesByCategory: ExpensesByCategory,
+  expensesByMonth: MonthlyExpensesByCategory[],
+  monthExpensesByDay: {
+    [key: string]: ByDayExpense
+  },
   isLoadingExpenses: boolean;
   isLoadingCategories: boolean;
   error: string;
@@ -145,6 +155,8 @@ const initialState:ExpensesDataState = {
     childCategories: {},
     maxValue: 0,
   },
+  expensesByMonth: [],
+  monthExpensesByDay: {},
   isLoadingExpenses: true,
   isLoadingCategories: true,
   error: '',
@@ -249,6 +261,58 @@ export const expensesDataSlice = createSlice({
       state.isLoadingExpenses = false;
       state.error = action.payload.message;
     },
+    getExpensesByMonthData(state, action: PayloadAction<GetExpensesByMonthInput>) {
+      state.isLoadingExpenses = true;
+      state.isLoadingCategories = true;
+    },
+    getExpensesByMonthDataSuccess(state, action: PayloadAction<ExpensesByMonthData>) {      
+      const categories = action.payload.categories;
+      const expensesByMonth = action.payload.expensesByMonth;
+      const { parentCategories, childCategories } = splitCategories(categories);
+      const monthlyExpensesByCategory: MonthlyExpensesByCategory[] = [];
+      expensesByMonth.forEach((monthExpenses) => {
+        const monthExpensesByCategory = getExpensesByCategories(parentCategories, childCategories, monthExpenses.expenses);    
+        monthlyExpensesByCategory.push({
+          total: monthExpenses.total,
+          year: monthExpenses.year,
+          month: monthExpenses.month,
+          ...monthExpensesByCategory
+        });
+      });
+
+      state.isLoadingExpenses = false;
+      state.isLoadingCategories = false;
+      state.categories = action.payload.categories;
+      state.parentCategories = parentCategories;
+      state.childCategories = childCategories;
+      state.expensesByMonth = monthlyExpensesByCategory.reverse();
+      state.error = '';
+    },
+    getExpensesByMonthDataFail(state, action: PayloadAction<GraphQLError>) {
+      state.isLoadingExpenses = false;
+      state.isLoadingCategories = false;
+      state.error = action.payload.message;
+    },
+    getMonthByDayExpenses(state, action: PayloadAction<GetMonthExpensesByDayInput>) {
+      state.isLoadingExpenses = true;
+    },
+    getMonthByDayExpensesSuccess(state, action: PayloadAction<MonthExpensesByDay>) { 
+      console.log(action.payload); 
+      const monthExpensesByDay: {
+        [key: string]: ByDayExpense
+      } = {};
+      action.payload.byDayExpenses.forEach((day) => {
+        monthExpensesByDay[day.day] = day;
+      });
+
+      state.isLoadingExpenses = false;
+      state.monthExpensesByDay = monthExpensesByDay;
+      state.error = '';
+    },
+    getMonthByDayExpensesFail(state, action: PayloadAction<GraphQLError>) {
+      state.isLoadingExpenses = false;
+      state.error = action.payload.message;
+    },
   }
 });
 
@@ -268,6 +332,12 @@ export const {
   deleteExpensesCategory,
   deleteExpensesCategorySuccess,
   deleteExpensesCategoryFail,
+  getExpensesByMonthData,
+  getExpensesByMonthDataSuccess,
+  getExpensesByMonthDataFail,
+  getMonthByDayExpenses,
+  getMonthByDayExpensesSuccess,
+  getMonthByDayExpensesFail
 } = expensesDataSlice.actions;
 
 export default expensesDataSlice.reducer;

@@ -45,6 +45,7 @@ export const mutations = {
       }
       day {
         total
+        _id
         expenses {
           price
           category
@@ -83,6 +84,7 @@ export const mutations = {
         userId
       }
       day {
+        _id
         total
         expenses {
           category

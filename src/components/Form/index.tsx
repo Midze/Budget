@@ -94,7 +94,9 @@ const AddForm: React.FC<AddFormProps> = ({className, categories, currentDate, ex
         isErrors = true;
       }
     });
+
     setErrors(errorsOnSubmit);
+
     if (expenseId && !isErrors) {
       dispatch(updateExpenses({
         _id: expenseId,

@@ -50,7 +50,28 @@ export interface ExpensesData {
   childCategories: ChildCategory;
 }
 
+export interface ExpensesByMonth {
+  total: number;
+  year: number;
+  month: number;
+  expenses: Expense[];
+}
+
+export interface ExpensesByMonthData {
+  categories: Category[];
+  expensesByMonth: ExpensesByMonth[];
+}
+
 export interface ExpensesByCategory {
+  parentCategory: ParentCategory;
+  childCategories: ChildCategory;
+  maxValue: number;
+}
+
+export interface MonthlyExpensesByCategory {
+  total: number;
+  year: number;
+  month: number;
   parentCategory: ParentCategory;
   childCategories: ChildCategory;
   maxValue: number;
@@ -86,4 +107,26 @@ export interface CreateExpensesInput {
     day: number;
     expenses: Expense[],
   }
+}
+
+export interface GetExpensesByMonthInput {
+  userId: string;
+  year: number;
+  months: number[];
+}
+
+export interface ByDayExpense {
+  total: number;
+  day: number;
+  month: number;
+}
+
+export interface MonthExpensesByDay {
+  byDayExpenses: ByDayExpense[]
+}
+
+export interface GetMonthExpensesByDayInput {
+  userId: string;
+  year: number;
+  month: number;
 }

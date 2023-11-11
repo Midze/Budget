@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '../../components/Card';
 import Expense from '../../components/Expense';
 import ExpenseList from '../../components/ExpenseList';
@@ -9,6 +9,7 @@ import { getExpensesByMonthData } from '../../data/reducers/ExpensesSlice';
 import { Category, Expense as ExpenseI } from '../../data/types/interfaces';
 import './styles.css';
 import hash_sum from 'hash-sum';
+import DateSelector from 'components/DateSelector';
 
 
 
@@ -18,22 +19,27 @@ const ByMonth = (): JSX.Element => {
   const expensesByMonth = useAppSelector(state => state.expensesData.expensesByMonth);
   const isLoadingExpenses = useAppSelector(state => state.expensesData.isLoadingExpenses);
   const isLoadingCategories = useAppSelector(state => state.expensesData.isLoadingCategories);
-
+  const [selectedDate, setSelectedDate] = useState(moment());
   const isLoading = isLoadingExpenses && isLoadingCategories;
+
+  const splittedSelectedDate = {
+    month: Number(selectedDate.format('M')),
+    year: Number(selectedDate.format('YYYY')),
+  };
 
   useEffect(() => {
     if(userId) {
-      dispatch(getExpensesByMonthData({
+      dispatch(getExpensesByMonthData({// bug with year when ypu coose edge of the year
         userId,
-        year: Number(moment().format('YYYY')),
+        year: splittedSelectedDate.year,
         months: [
-          Number(moment().subtract(2, 'months').format('M')),
-          Number(moment().subtract(1, 'months').format('M')),
-          Number(moment().format('M')),
+          Number(moment(selectedDate).subtract(2, 'months').format('M')),
+          Number(moment(selectedDate).subtract(1, 'months').format('M')),
+          splittedSelectedDate.month,
         ],
       }));
     }
-  }, [userId]);
+  }, [userId, selectedDate]);
   
   const monthlyExpenses = expensesByMonth.map(({
     total,
@@ -44,7 +50,7 @@ const ByMonth = (): JSX.Element => {
     maxValue
   }) => {
     return (
-      <Card key={hash_sum([total, month])} title={`Monthly Epenses for ${moment([year, month -1 , 1]).format('MMMM')} ${year}`} type={'expenses'}>
+      <Card key={hash_sum([total, month])} className='month-expenses-card' title={`Monthly Epenses for ${moment([year, month -1 , 1]).format('MMMM')} ${year}`} type={'expenses'}>
         <Total value={total} size='l' isLoading={isLoading}/>
         {parentCategory && <ExpenseList isLoading={isLoading} expenses={{parentCategory, childCategories, maxValue}}/>}
       </Card>
@@ -52,7 +58,14 @@ const ByMonth = (): JSX.Element => {
   });
 
   return (
-    <div className="dashbord">
+    <div className="by-month-container">
+      <div className="by-month-date-selector">
+        <DateSelector
+          changeDate={setSelectedDate}
+          dateType='M'
+          pickMonth
+        />
+      </div>
       {monthlyExpenses}
     </div>
   );

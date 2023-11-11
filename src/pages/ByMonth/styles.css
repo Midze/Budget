@@ -1,10 +1,30 @@
-.dashbord {
+.by-month-container {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+    "datePicker . ."
+    "monthExpensesCard1 monthExpensesCard2 monthExpensesCard3";
     grid-gap: 8px;
     height: 100%;
     max-height: calc(100vh - 82px)
+}
+
+.month-expenses-card:nth-child(2) {
+    grid-area: monthExpensesCard1;
+}
+
+.month-expenses-card:nth-child(3) {
+    grid-area: monthExpensesCard2;
+}
+
+.month-expenses-card:nth-child(4) {
+    grid-area: monthExpensesCard3;
+}
+
+.by-month-date-selector {
+    width: max-content;
 }
 
 @media (max-width: 1300px) {

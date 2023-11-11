@@ -21,7 +21,8 @@
   border-radius: 2px;
   padding: 5px 5px;
   box-sizing: border-box;
-} 
+}
+
 .react-datepicker__day:hover {
   background-color: #202226;
   color: #fff;
@@ -88,4 +89,28 @@
 .react-datepicker__navigation--previous::before {
   /* left: 0; */
   transform: rotate(-135deg);
+}
+
+/* styles for month picker */
+
+.react-datepicker__monthPicker {
+  display: flex;
+}
+
+.react-datepicker-year-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.react-datepicker__month-text {
+  cursor: pointer;
+  border-radius: 2px;
+  padding: 5px 5px;
+  box-sizing: border-box;
+}
+
+.react-datepicker__month-text:hover {
+  background-color: #202226;
+  color: #fff;
 }

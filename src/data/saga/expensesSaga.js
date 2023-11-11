@@ -68,7 +68,7 @@ export function* createExpensesSaga({ payload }) {
       mutation,
       variables: payload,
     };
-
+    console.log('saga mutation', payload);
     const { createExpenses } = yield call(executeMutation, options);
     const { day, week, month } = createExpenses;
     return yield put(createExpensesSuccess({
@@ -116,7 +116,7 @@ export function* getMonthByDayExpensesSaga({payload}) {
 
     const { getMonthExpensesByDay } = yield call(executeQuery, options);
     const { byDayExpenses } = getMonthExpensesByDay;
-
+    console.log('saga', byDayExpenses);
     return yield put(getMonthByDayExpensesSuccess({
       byDayExpenses
     }));

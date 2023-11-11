@@ -45,6 +45,7 @@ const AddPage: React.FC = (): JSX.Element => {
       <Card type="add" title={'Daily Expenses'}>
         <DateSelector 
           changeDate={setSelectedDate}
+          dateType='d'
         />
         <AddForm
           userId={userId}

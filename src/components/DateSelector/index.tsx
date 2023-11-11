@@ -9,23 +9,37 @@ import { useAppSelector } from 'hooks/redux';
 
 interface DateSelectorProps {
   className?: string;
+  dateType: string;
+  pickMonth?: boolean;
   changeDate: (date: Moment) => void;
 }
 
-const DateSelector: React.FC<DateSelectorProps> = ({className, changeDate}): JSX.Element => {
+type TypedateTypeMap = {
+  M: string;
+  d: string;
+};
+
+const dateTypeMap:TypedateTypeMap = {
+  'M': 'MM/yyyy',
+  'd': 'dd/MM/yyyy'
+};
+
+const DateSelector: React.FC<DateSelectorProps> = ({className, pickMonth, dateType, changeDate}): JSX.Element => {
   const isLoadingExpenses = useAppSelector(state => state.expensesData.isLoadingExpenses);
   const [startDate, setStartDate] = useState(new Date());
-  const prevDay = () => {
-    const prevDay = moment(startDate).subtract(1, 'days');
-    changeDate(prevDay);// to-do use debounce
-    setStartDate(prevDay.toDate());
+  const dateFormat = dateTypeMap[dateType as keyof TypedateTypeMap];
+  const prevDate = () => {
+    const prevDate = dateType === 'M' ? moment(startDate).subtract(1, dateType) : moment(startDate).subtract(1, 'd');
+    changeDate(prevDate);// to-do use debounce
+    setStartDate(prevDate.toDate());
   };
-  const nextDay = () => {
-    const nextDate = moment(startDate).add(1, 'days');
+  const nextDate = () => {
+    const nextDate = dateType === 'M' ? moment(startDate).add(1, 'M') : moment(startDate).add(1, 'd');
     changeDate(nextDate);// to-do use debounce
     setStartDate(nextDate.toDate());
   };
-  const onCHangeDate = (date: Date) => {
+  
+  const onChangeDate = (date: Date) => {
     changeDate(moment(date));
     setStartDate(date);
   };
@@ -36,20 +50,21 @@ const DateSelector: React.FC<DateSelectorProps> = ({className, changeDate}): JSX
         className={cn(styles.arrow, styles.arrowPrev, {
           [styles.disabled]: isLoadingExpenses
         })}
-        onClick={prevDay}
+        onClick={prevDate}
       />
       <DatePicker
         className={cn(styles.datePicker)}
         calendarClassName={cn(styles.datePickerDatesWrapper)}
         selected={startDate}
-        dateFormat="dd/MM/yyyy"
-        onChange={onCHangeDate}
+        dateFormat={dateFormat}
+        onChange={onChangeDate}
+        showMonthYearPicker={pickMonth}
       />
       <ArrowIcon
         className={cn(styles.arrow, styles.arrowNext, {
           [styles.disabled]: isLoadingExpenses
         })}
-        onClick={nextDay}
+        onClick={nextDate}
       />  
     </div>
   );

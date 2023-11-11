@@ -89,7 +89,7 @@ const MonthByDay = (): JSX.Element => {
                   >
                     <div>{day.day}</div>
                     <div>
-                      {day.isActive && monthExpensesByDay[day.day]?.total ?  monthExpensesByDay[day.day].total : '0.00'}
+                      {day.isActive && monthExpensesByDay[day.day]?.total ?  Number(monthExpensesByDay[day.day].total).toFixed(2) : '-'}
                     </div>
                   </div>
               )

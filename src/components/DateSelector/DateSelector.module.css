@@ -45,6 +45,8 @@
 
 .arrowNext {
   transform: rotate(180deg);
+  display: flex;
+  align-items: end;
 }
 
 .disabled {

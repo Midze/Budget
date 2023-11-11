@@ -22,7 +22,7 @@ const Total: React.FC<TotalProps> = ({ className, value, title, size = 'l', isLo
         <div className={cn(styles.value, {
           [styles.loading]: isLoading,
         })}>
-          { value.toFixed(2) } ₾
+          { value.toFixed(2) } €
         </div>
       </div>
     </div>

@@ -297,7 +297,7 @@ export const expensesDataSlice = createSlice({
       state.isLoadingExpenses = true;
     },
     getMonthByDayExpensesSuccess(state, action: PayloadAction<MonthExpensesByDay>) { 
-      console.log(action.payload); 
+      console.log('action.payload', action.payload); 
       const monthExpensesByDay: {
         [key: string]: ByDayExpense
       } = {};

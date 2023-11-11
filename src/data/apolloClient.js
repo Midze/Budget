@@ -19,10 +19,13 @@ const defaultOptions = {
   },
 };
 
-const httpLink = createHttpLink({
-  uri: 'http://95.217.18.50:3000/graphql',
-});
+export const prodUri = 'http://95.217.18.50:3000/graphql';
+export const devUri = 'http://localhost:3000/graphql';
 
+const httpLink = createHttpLink({
+  uri: process.env.NODE_ENV.URI === 'production' ? prodUri : devUri
+});
+console.log(httpLink);
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');
   return {

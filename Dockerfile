@@ -2,7 +2,7 @@ FROM node:14.18-alpine as build
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
+COPY package.json ./
 
 ENV NODE_PATH=/node_modules
 
